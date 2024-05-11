@@ -1,20 +1,20 @@
 {
-	"name": "lsp-sample",
-	"description": "A language server example",
-	"author": "Microsoft Corporation",
+	"name": "my_system_verilog_extension",
+	"description": "My System Verilog Extension",
+	"author": "Steve Conway",
 	"license": "MIT",
 	"version": "1.0.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
+		"url": "https://github.com/sconwayaus/mySystemVerilogExtension"
 	},
-	"publisher": "vscode-samples",
+	"publisher": "Steve Conway",
 	"categories": [],
 	"keywords": [
 		"multi-root ready"
 	],
 	"engines": {
-		"vscode": "^1.75.0"
+		"vscode": "^1.88.1"
 	},
 	"activationEvents": [
 		"onLanguage:systemverilog"
@@ -23,24 +23,46 @@
 	"contributes": {
 		"configuration": {
 			"type": "object",
-			"title": "mySystemVerilogExtension",
+			"title": "My System Verilog Extension",
 			"properties": {
-				"mySystemVerilogExtension.path": {
+				"mySystemVerilogExtension.languageServer.path": {
 					"type": "string",
 					"default": "verible-verilog-ls",
 					"scope": "machine-overridable",
-					"description": "The path to verible-verilog-ls executable, e.g.: /usr/bin/verible-verilog-ls."
+					"description": "The path to verible-verilog-ls executable, e.g.: /usr/bin/verible-verilog-ls.",
+					"order": 0
 				},
-				"mySystemVerilogExtension.arguments": {
+				"mySystemVerilogExtension.languageServer.arguments": {
 					"type": "array",
 					"default": [],
 					"items": {
 						"type": "string"
 					},
-					"description": "Arguments for verible-verilog-ls server."
+					"description": "Arguments for verible-verilog-ls server.",
+					"order": 1
+				},
+				"mySystemVerilogExtension.projectFileList.includeGlobPattern" : {
+					"type": "string",
+					"default": "{**/*.sv,**/.*v,**/*.svh}",
+					"scope": "machine-overridable",
+					"description": "Include glob pattern creating verible.filelist.",
+					"order": 2
+				},
+				"mySystemVerilogExtension.projectFileList.excludeGlobPattern" : {
+					"type": "string",
+					"default": "",
+					"scope": "machine-overridable",
+					"description": "Exclude glob pattern creating verible.filelist.",
+					"order": 3
 				}
 			}
 		},
+		"commands": [
+			{
+				"command": "mySystemVerilogExtension.createProjectFileList",
+				"title": "mySystemVerilogExtension: Create Project File List (verible.filelist)"
+			}
+		],
 		"languages": [
 			{
 				"id": "systemverilog",

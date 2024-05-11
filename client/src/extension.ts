@@ -2,24 +2,23 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
-
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { workspace, ExtensionContext } from 'vscode';
-
 import {
     Executable,
     LanguageClient,
     LanguageClientOptions,
-    ServerOptions,
-    TransportKind
+    ServerOptions
 } from 'vscode-languageclient/node';
 
-let client: LanguageClient;
+import { initProjectFileList } from './projectFileList';
+import { APP_CONFIG_ROOT, APP_NAME } from './constants';
 
-async function initLanguageClient(context: ExtensionContext) {
-    const output = vscode.window.createOutputChannel('My System Verilog Extension');
-    const config = vscode.workspace.getConfiguration('mySystemVerilogExtension');
+let client: LanguageClient;
+let clientContext: vscode.ExtensionContext;
+
+async function initLanguageClient(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
+    const config = vscode.workspace.getConfiguration(APP_CONFIG_ROOT);
 
     const binary_path = context.asAbsolutePath(
         path.join('bin', 'verible-verilog-ls')
@@ -31,21 +30,6 @@ async function initLanguageClient(context: ExtensionContext) {
     };
 
     const serverOptions: ServerOptions = verible_ls;
-    
-    // The server is implemented in node
-    // const serverModule = context.asAbsolutePath(
-    //     path.join('bin', 'verible-verilog-ls')
-    // );
-
-    // // If the extension is launched in debug mode then the debug server options are used
-    // // Otherwise the run options are used
-    // const serverOptions: ServerOptions = {
-    //     run: { module: serverModule, transport: TransportKind.ipc },
-    //     debug: {
-    //         module: serverModule,
-    //         transport: TransportKind.ipc,
-    //     }
-    // };
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
@@ -54,19 +38,11 @@ async function initLanguageClient(context: ExtensionContext) {
                            { scheme: 'file', language: 'verilog' }],
         outputChannel: output
     };
-    // const clientOptions: LanguageClientOptions = {
-    //     // Register the server for plain text documents
-    //     documentSelector: [{ scheme: 'file', language: 'plaintext' }],
-    //     synchronize: {
-    //         // Notify the server about file changes to '.clientrc files contained in the workspace
-    //         fileEvents: workspace.createFileSystemWatcher('**/.clientrc')
-    //     }
-    // };
 
     // Create the language client and start the client.
     client = new LanguageClient(
-        'mySystemVerilogExtension',
-        'My System Verilog Extension',
+        APP_CONFIG_ROOT,
+        APP_NAME,
         serverOptions,
         clientOptions
     );
@@ -75,21 +51,37 @@ async function initLanguageClient(context: ExtensionContext) {
     client.start();
 }
 
-export function activate(context: ExtensionContext) {
+export async function stopLanguageServer() {
+    await client.stop();
+}
+
+export function startLanguageServer(output: vscode.OutputChannel) {
+    if (!client) {
+        return initLanguageClient(clientContext, output);
+    }
+    client.stop().finally(() => {
+        initLanguageClient(clientContext, output);
+    });
+}
+
+export function activate(context: vscode.ExtensionContext) {
+    clientContext = context;
+    
+    const output = vscode.window.createOutputChannel(APP_NAME);
+
     // If a configuration change even it fired, let's dispose
     // of the previous client and create a new one.
     vscode.workspace.onDidChangeConfiguration(async (event) => {
-        if (!event.affectsConfiguration('mySystemVerilogExtension')) {
+        if (!event.affectsConfiguration(APP_CONFIG_ROOT)) {
             return;
         }
-        if (!client) {
-            return initLanguageClient(context);
-        }
-        client.stop().finally(() => {
-            initLanguageClient(context);
-        });
+        startLanguageServer(output);
     });
-    return initLanguageClient(context);
+
+    // Init code to manage the project file list
+    initProjectFileList(context, output);
+
+    return initLanguageClient(context, output);
 }
 
 export function deactivate(): Thenable<void> | undefined {
