@@ -1,5 +1,5 @@
 {
-	"name": "my_system_verilog_extension",
+	"name": "steves-system-verilog-extension",
 	"description": "My System Verilog Extension",
 	"author": "Steve Conway",
 	"license": "MIT",
@@ -8,7 +8,7 @@
 		"type": "git",
 		"url": "https://github.com/sconwayaus/mySystemVerilogExtension"
 	},
-	"publisher": "Steve Conway",
+	"publisher": "SteveCreations",
 	"categories": [],
 	"keywords": [
 		"multi-root ready"
@@ -41,14 +41,14 @@
 					"description": "Arguments for verible-verilog-ls server.",
 					"order": 1
 				},
-				"mySystemVerilogExtension.projectFileList.includeGlobPattern" : {
+				"mySystemVerilogExtension.projectFileList.includeGlobPattern": {
 					"type": "string",
 					"default": "{**/*.sv,**/.*v,**/*.svh}",
 					"scope": "machine-overridable",
 					"description": "Include glob pattern creating verible.filelist.",
 					"order": 2
 				},
-				"mySystemVerilogExtension.projectFileList.excludeGlobPattern" : {
+				"mySystemVerilogExtension.projectFileList.excludeGlobPattern": {
 					"type": "string",
 					"default": "",
 					"scope": "machine-overridable",
@@ -83,7 +83,11 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npm run esbuild-base -- --minify",
+		"esbuild-base": "esbuild ./client/src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+		"esbuild": "npm run esbuild-base -- --sourcemap",
+		"esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+		"test-compile": "tsc -p ./",
 		"compile": "tsc -b",
 		"watch": "tsc -b -w",
 		"lint": "eslint ./client/src --ext .ts,.tsx",
@@ -95,6 +99,7 @@
 		"@types/node": "^18.14.6",
 		"@typescript-eslint/eslint-plugin": "^7.1.0",
 		"@typescript-eslint/parser": "^7.1.0",
+		"esbuild": "^0.21.2",
 		"eslint": "^8.57.0",
 		"mocha": "^10.3.0",
 		"typescript": "^5.3.3"
