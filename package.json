@@ -16,25 +16,240 @@
 	"engines": {
 		"vscode": "^1.88.1"
 	},
-	"activationEvents": [
-		"onLanguage:systemverilog"
-	],
 	"main": "./client/out/extension",
 	"contributes": {
+		"languages": [
+			{
+				"id": "systemverilog",
+				"extensions": [
+					".sv"
+				],
+				"aliases": [
+					"SystemVerilog",
+					"systemverilog",
+					"System Verilog",
+					"Systemverilog"
+				],
+				"configuration": "./configs/systemVerilog.json",
+				"icon": {
+					"light": "./resources/sv_light.svg",
+					"dark": "./resources/sv_dark.svg"
+				}
+			},
+			{
+				"id": "systemverilogheader",
+				"aliases": [
+					"SystemVerilog",
+					"systemverilog",
+					"System Verilog",
+					"Systemverilog"
+				],
+				"extensions": [
+					".svh"
+				],
+				"configuration": "./configs/systemVerilog.json",
+				"icon": {
+					"light": "./resources/svh_light.svg",
+					"dark": "./resources/svh_dark.svg"
+				}
+			},
+			{
+				"id": "verilog",
+				"aliases": [
+					"Verilog",
+					"verilog"
+				],
+				"extensions": [
+					".v"
+				],
+				"configuration": "./configs/systemVerilog.json",
+				"icon": {
+					"light": "./resources/v_light.svg",
+					"dark": "./resources/v_dark.svg"
+				}
+			},
+			{
+				"id": "verilogheader",
+				"aliases": [
+					"Verilog",
+					"verilog"
+				],
+				"extensions": [
+					".vh"
+				],
+				"configuration": "./configs/systemVerilog.json",
+				"icon": {
+					"light": "./resources/vh_light.svg",
+					"dark": "./resources/vh_dark.svg"
+				}
+			},
+			{
+				"id": "verilog-filelist",
+				"aliases": [
+					"Verilog Filelist",
+					"verilog-filelist",
+					"Dot-F File"
+				],
+				"extensions": [
+					".f"
+				],
+				"configuration": "./configs/verilogFileList.json",
+				"icon": {
+					"light": "./resources/f_light.svg",
+					"dark": "./resources/f_dark.svg"
+				}
+			},
+			{
+				"id": "sdc",
+				"aliases": [
+					"Synopsys Design Constraints"
+				],
+				"extensions": [
+					".sdc"
+				],
+				"configuration": "./configs/sdc.json",
+				"icon": {
+					"light": "./resources/sdc_light.svg",
+					"dark": "./resources/sdc_dark.svg"
+				}
+			},
+			{
+				"id": "xdc",
+				"aliases": [
+					"Xilinx Design Constraints"
+				],
+				"extensions": [
+					".xdc"
+				],
+				"configuration": "./configs/sdc.json",
+				"icon": {
+					"light": "./resources/sdc_light.svg",
+					"dark": "./resources/sdc_dark.svg"
+				}
+			},
+			{
+				"id": "qip",
+				"aliases": [
+					"Quartus IP File"
+				],
+				"extensions": [
+					".qip"
+				],
+				"configuration": "./configs/sdc.json",
+				"icon": {
+					"light": "./resources/sdc_light.svg",
+					"dark": "./resources/sdc_dark.svg"
+				}
+			},
+			{
+				"id": "tcl",
+				"aliases": [
+					"Tool Command Language"
+				],
+				"extensions": [
+					".tcl"
+				],
+				"configuration": "./configs/sdc.json",
+				"icon": {
+					"light": "./resources/sdc_light.svg",
+					"dark": "./resources/sdc_dark.svg"
+				}
+			}
+		],
+		"snippets": [
+			{
+				"language": "systemverilog",
+				"path": "./snippets/systemverilog.json"
+			},
+			{
+				"language": "verilog",
+				"path": "./snippets/systemverilog.json"
+			},
+			{
+				"language": "systemverilogheader",
+				"path": "./snippets/systemverilog.json"
+			},
+			{
+				"language": "verilogheader",
+				"path": "./snippets/systemverilog.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "systemverilog",
+				"scopeName": "source.systemverilog",
+				"path": "./syntaxes/systemverilog.tmLanguage.json"
+			},
+			{
+				"language": "verilog",
+				"scopeName": "source.systemverilog",
+				"path": "./syntaxes/systemverilog.tmLanguage.json"
+			},
+			{
+				"language": "systemverilogheader",
+				"scopeName": "source.systemverilog",
+				"path": "./syntaxes/systemverilog.tmLanguage.json"
+			},
+			{
+				"language": "verilogheader",
+				"scopeName": "source.systemverilog",
+				"path": "./syntaxes/systemverilog.tmLanguage.json"
+			},
+			{
+				"language": "verilog-filelist",
+				"scopeName": "source.verilog-filelist",
+				"path": "./syntaxes/verilog-filelist.json"
+			},
+			{
+				"language": "sdc",
+				"scopeName": "source.sdc",
+				"path": "./syntaxes/sdc.json"
+			},
+			{
+				"language": "xdc",
+				"scopeName": "source.sdc",
+				"path": "./syntaxes/sdc.json"
+			},
+			{
+				"language": "qip",
+				"scopeName": "source.sdc",
+				"path": "./syntaxes/sdc.json"
+			},
+			{
+				"language": "tcl",
+				"scopeName": "source.tcl",
+				"path": "./syntaxes/tcl/tcl.tmLanguage.json"
+			}
+		],
+		"activationEvents": [
+			"onLanguage:systemverilog",
+			"onLanguage:verilog",
+			"onLanguage:systemverilogheader",
+			"onLanguage:verilogheader",
+			"onLanguage:systemverilog",
+			"onLanguage:verilog",
+			"onLanguage:systemverilogheader",
+			"onLanguage:verilogheader",
+			"onLanguage:verilog-filelist",
+			"onLanguage:sdc",
+			"onLanguage:xdc",
+			"onLanguage:qip",
+			"onLanguage:tcl"
+		],
 		"configuration": {
 			"type": "object",
 			"title": "My System Verilog Extension",
 			"properties": {
 				"mySystemVerilogExtension.languageServer.path": {
 					"type": "string",
-					"default": "verible-verilog-ls",
+					"default": "./bin/verible-verilog-ls",
 					"scope": "machine-overridable",
 					"description": "The path to verible-verilog-ls executable, e.g.: /usr/bin/verible-verilog-ls.",
 					"order": 0
 				},
 				"mySystemVerilogExtension.languageServer.arguments": {
 					"type": "array",
-					"default": [],
+					"default": ["--rules_file ./bin/rules.verible_lint"],
 					"items": {
 						"type": "string"
 					},
@@ -50,7 +265,7 @@
 				},
 				"mySystemVerilogExtension.projectFileList.excludeGlobPattern": {
 					"type": "string",
-					"default": "",
+					"default": "{**/db/,**/incremental_db/,**/output/}",
 					"scope": "machine-overridable",
 					"description": "Exclude glob pattern creating verible.filelist.",
 					"order": 3
@@ -62,24 +277,6 @@
 				"command": "mySystemVerilogExtension.createProjectFileList",
 				"title": "mySystemVerilogExtension: Create Project File List (verible.filelist)"
 			}
-		],
-		"languages": [
-			{
-				"id": "systemverilog",
-				"extensions": [
-					".sv",
-					".v"
-				],
-				"aliases": [
-					"System Verilog",
-					"system-verilog",
-					"verilog"
-				]
-			}
-		],
-		"activationEvents": [
-			"onLanguage:systemverilog",
-			"onLanguage:verilog"
 		]
 	},
 	"scripts": {

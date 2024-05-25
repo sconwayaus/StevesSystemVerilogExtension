@@ -1,0 +1,386 @@
+{
+    "Begin End Block": {
+        "prefix": "begin end",
+        "body": [
+            "begin",
+            "\t${0}",
+            "end"
+        ],
+        "description": "Begin end block statement"
+    },
+    "assign": {
+        "prefix": "assign",
+        "description": "Snippet for an assignment",
+        "body": [
+            "assign ${1:var} = ${2:value};$0"
+        ]
+    },
+    "force": {
+        "prefix": "force",
+        "description": "Snippet for a force assignment",
+        "body": [
+            "force ${1:var} = ${2:value};$0"
+        ]
+    },
+    "always": {
+        "prefix": "always",
+        "body": [
+            "always @($1:sensitivity_list) begin",
+            "\t${0}",
+            "end"
+        ],
+        "description": "Snippet for an always block"
+    },
+    "always_ff": {
+        "prefix": "always_ff",
+        "description": "Snippet for an always_ff block",
+        "body": [
+            "always_ff @(posedge ${1:clk}${3:, negedge ${2:n_reset}}) begin",
+            "\tif(!${2:n_reset}) begin",
+            "\t\t$0",
+            "\tend",
+            "\telse begin",
+            "\t\t",
+            "\tend",
+            "end"
+        ]
+    },
+    "always_latch": {
+        "prefix": "always_latch",
+        "body": [
+            "always_latch begin",
+            "\t${0}",
+            "end"
+        ],
+        "description": "Snippet for an always_latch block"
+    },
+    "always_comb": {
+        "prefix": "always_comb",
+        "description": "Snippet for an always_comb block",
+        "body": [
+            "always_comb begin",
+            "\t${0}",
+            "end"
+        ]
+    },
+    "if": {
+        "prefix": "if",
+        "body": [
+            "if(${1:condition}) begin",
+            "\t${2}",
+            "end"
+        ],
+        "description": "Snippet for an if statement"
+    },
+    "if/else": {
+        "prefix": "if/else",
+        "body": [
+            "if(${1:condition}) begin",
+            "\t${2}",
+            "end",
+            "else begin",
+            "\t${3}",
+            "end"
+        ],
+        "description": "Snippet for an if statement with else"
+    },
+    "elseif": {
+        "prefix": "else if",
+        "body": [
+            "else if(${1:condition}) begin",
+            "\t${2}",
+            "end"
+        ],
+        "description": "Snippet for an else if"
+    },
+    "else": {
+        "prefix": "else",
+        "body": [
+            "else begin",
+            "\t${1}",
+            "end"
+        ],
+        "description": "Snippet for an else"
+    },
+    "case": {
+        "prefix": "case",
+        "body": [
+            "case(${1:variable})",
+            "\t${0}",
+            "endcase"
+        ],
+        "description": "Snippet for a case statement"
+    },
+    "case/default": {
+        "prefix": "case/default",
+        "body": [
+            "case(${1:variable})",
+            "\t${0}",
+            "\tdefault: begin",
+            "\t\t${2}",
+            "\tend",
+            "endcase"
+        ],
+        "description": "Snippet for a case statement with default"
+    },
+    "while": {
+        "prefix": "while",
+        "body": [
+            "while(${1:expression}) begin",
+            "\t${2}",
+            "end"
+        ],
+        "description": "Snippet for a while loop"
+    },
+    "for": {
+        "prefix": "for",
+        "body": [
+            "for(int ${1:i} = 0; ${1:i} < ${2:MAX}; ${1:i}++) begin",
+            "\t${3}",
+            "end"
+        ],
+        "description": "Snippet for a for loop"
+    },
+    "foreach": {
+        "prefix": "foreach",
+        "body": [
+            "foreach( ${1:arr}[${2:i}] ) begin",
+            "\t${3}",
+            "end"
+        ],
+        "description": "Snippet for a foreach loop"
+    },
+    "function": {
+        "prefix": "function",
+        "body": [
+            "function automatic ${1:return_value} ${2:name}(${3:port_list});",
+            "\t${0}",
+            "endfunction"
+        ],
+        "description": "Snippet for a function definition"
+    },
+    "task": {
+        "prefix": "task",
+        "body": [
+            "task automatic ${1:name}(${2:port_list});",
+            "\t${0}",
+            "endtask"
+        ],
+        "description": "Snippet for a task definition (includes automatic keyword)"
+    },
+    "task cycles": {
+        "prefix": "task cycles",
+        "body": [
+            "task automatic cycles( int unsigned n );",
+            "\tassert(n > 0) else $$error(\"Invalid input to cycles\");",
+            "\trepeat(n) @(posedge ${0:clk});",
+            "endtask"
+        ],
+        "description": "A clock delay helper function for simulation"
+    },
+    "class": {
+        "prefix": "class",
+        "body": [
+            "class ${1:name};",
+            "\t${0}",
+            "endclass"
+        ],
+        "description": "Snippet for a class definition"
+    },
+    "class/extends": {
+        "prefix": "class/extends",
+        "body": [
+            "class ${1:name} extends ${2:super};",
+            "\tfunction new();",
+            "\t\t$0",
+            "\tendfunction",
+            "endclass"
+        ],
+        "description": "Snippet for a class definition with extends"
+    },
+    "program": {
+        "prefix": "program",
+        "body": [
+            "program ${1:name}(${2:port_list});",
+            "\t${0}",
+            "endprogram"
+        ],
+        "description": "Snippet for a program definition"
+    },
+    "module": {
+        "prefix": "module",
+        "body": [
+            "module ${1:modulename}(",
+            "\t${2:port_list}",
+            ");",
+            "\t${0}",
+            "endmodule"
+        ],
+        "description": "Snippet for a module definition"
+    },
+    "module#(param)": {
+        "prefix": "module #(",
+        "body": [
+            "module ${1:name} #(",
+            "\t${2:parameters}",
+            ")",
+            "//------------------------------------------------------",
+	        "//--                    Ports                         --",
+	        "//------------------------------------------------------",
+            "(",
+            "\t${3:port_list}",
+            ");",
+            "\t${0}",
+            "endmodule"
+        ],
+        "description": "Snippet for a parameterized module definition"
+    },
+    "assert": {
+        "prefix": "assert",
+        "body": [
+            "${1:label}: assert(${2:test})",
+            "\telse \\$error(\"${0:Assertion ${1:label} failed!}\");"
+        ],
+        "description": "Snippet for an immediate assertion"
+    },
+    "property": {
+        "prefix": "property",
+        "description": "Snippet for a property",
+        "body": [
+            "property ${1:name};",
+            "\t@(posedge ${2:clk}) ${0:test}",
+            "endproperty"
+        ]
+    },
+    "generate": {
+        "prefix": "generate",
+        "description": "Snippet for a generate block",
+        "body": [
+            "generate",
+            "\t${0}",
+            "endgenerate"
+        ]
+    },
+    "typedef enum": {
+        "prefix": "typedef enum",
+        "body": [
+            "typedef enum ${1:int unsigned} {",
+            "\t${0:IDLE}",
+            "} ${2:Name_Of_Type}_t;"
+        ],
+        "description": "type definition for an eunumeration"
+    },
+    "typedef struct": {
+        "prefix": "typedef struct",
+        "body": [
+            "typedef struct ${1:packed} {",
+            "\t${0:logic\telement;}",
+            "} ${2:Name_Of_Type}_t;"
+        ],
+        "description": "type definition for an eunumeration"
+    },
+    "interface": {
+        "prefix": "interface",
+        "body": [
+            "interface ${1:name};",
+            "\t${0}",
+            "endinterface"
+        ],
+        "description": "Snippet for an interface definition"
+    },
+    "ternary": {
+        "prefix": "ter",
+        "body": ["$1 ? $2 : $3"],
+        "description": "Snippet for a ternary operator expression"
+    },
+    "reg": {
+        "prefix": "reg",
+        "body": ["reg $1;$0"],
+        "description": "Snippet for a register declaration"
+    },
+    "regarray": {
+        "prefix": "rega",
+        "body": ["reg [$1:$2] $3;$0"],
+        "description": "Snippet for a multi-bit register declaration"
+    },
+    "regmemory": {
+        "prefix": "regm",
+        "body": ["reg [$1:$2] $3 [$4:$5];$0"],
+        "description": "Snippet for a memory register declaration"
+    },
+    "wire": {
+        "prefix": "wire",
+        "body": ["wire $1;$0"],
+        "description": "Snippet for a wire declaration"
+    },
+    "wirearray": {
+        "prefix": "wirea",
+        "body": ["wire [$1:$2] $3;$0"],
+        "description": "Snippet for a multi-bit wire declaration"
+    },
+    "logic": {
+        "prefix": "logic",
+        "body": ["logic $1;$0"],
+        "description": "Snippet for a logic signal declaration"
+    },
+    "logicarray": {
+        "prefix": "logica",
+        "body": ["logic [$1:$2] $3;$0"],
+        "description": "Snippet for a multi-bit logic signal declaration"
+    },
+    "array": {
+        "prefix": "array",
+        "body": "[${1:8}:${2:0}]$0",
+        "description": "Snippet for a multi-bit register declaration"
+    },
+    "associative_array": {
+        "prefix": "assoc",
+        "body": "${1:type} ${2:name}[${3:index_type}];$0",
+        "description": "Snippet for a associative array declaration"
+    },
+    "separator": {
+        "prefix": "separator",
+        "description": "Snippet for a separator",
+        "body": [
+            "// -------------------------------------------------------\n$0"
+        ]
+    },
+    "heading": {
+        "prefix": "heading",
+        "description": "Snippet for a heading",
+        "body": [
+            "// -------------------------------------------------------",
+            "// -- ${1:heading}",
+            "// -------------------------------------------------------\n$0"
+        ]
+    },
+    "heading+description": {
+        "prefix": "heading+description",
+        "description": "Snippet for a heading with a block for description",
+        "body": [
+            "// -------------------------------------------------------",
+            "// -- ${1:heading}",
+            "// -------------------------------------------------------",
+            "// ${2:description}",
+            "// -------------------------------------------------------\n$0"
+        ]
+    },
+    "synthesis translate off": {
+        "prefix": "synthesis translate off",
+        "body": [
+            "// synthesis translate off",
+            "\t${0}",
+            "// synthesis translate on"
+        ],
+        "description": "A block of non synthesisable code"
+    },
+    "verilog_cover_off": {
+        "prefix": "// verilog_cover_off",
+        "body": [
+            "// verilog_cover_off",
+            "\t${0}",
+            "// verilog_cover_on"
+        ],
+        "description": "A block of code to ignore during Riviera Code Coverage analysis"
+    }
+}
