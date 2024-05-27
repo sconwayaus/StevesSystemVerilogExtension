@@ -12,21 +12,30 @@ import {
 } from 'vscode-languageclient/node';
 
 import { initProjectFileList } from './projectFileList';
-import { APP_CONFIG_ROOT, APP_NAME } from './constants';
+import { APP_CONFIG_ROOT, APP_CONFIG_LANGUAGE_SERVER, APP_NAME } from './constants';
 
 let client: LanguageClient;
 let clientContext: vscode.ExtensionContext;
+let n_clients = 0;
 
 async function initLanguageClient(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
-    const config = vscode.workspace.getConfiguration(APP_CONFIG_ROOT);
+    const config = vscode.workspace.getConfiguration(APP_CONFIG_LANGUAGE_SERVER);
 
     const binary_path = context.asAbsolutePath(
-        path.join('bin', 'verible-verilog-ls')
+        await config.get<string>('path')
     );
+
+    const rules_config_arg_value = context.asAbsolutePath(
+        await config.get<string>('rules_config')
+    );
+    
+    const rules_config_arg = ["--rules_config", rules_config_arg_value];
+    const user_args = await config.get<string[]>('arguments');
+    const args = rules_config_arg.concat(user_args);
 
     const verible_ls: Executable = {
         command: binary_path,
-        args: await config.get<string[]>('arguments')
+        args: args
     };
 
     const serverOptions: ServerOptions = verible_ls;
@@ -49,6 +58,8 @@ async function initLanguageClient(context: vscode.ExtensionContext, output: vsco
 
     // Start the client. This will also launch the server
     client.start();
+
+    n_clients++;
 }
 
 export async function stopLanguageServer() {

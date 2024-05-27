@@ -24,7 +24,7 @@ async function createProjectFileList() {
 
     let writeDataStr = "";
     filelist.forEach(f => {
-        writeDataStr += posix.relative(folderUri.fsPath, f.fsPath);
+        writeDataStr += f.fsPath.replace(folderUri.fsPath, ".");
         writeDataStr += "\n";
     });
     
