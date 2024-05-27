@@ -142,6 +142,20 @@
 				}
 			},
 			{
+				"id": "qsf",
+				"aliases": [
+					"Quartus Settings File"
+				],
+				"extensions": [
+					".qsf"
+				],
+				"configuration": "./configs/sdc.json",
+				"icon": {
+					"light": "./resources/sdc_light.svg",
+					"dark": "./resources/sdc_dark.svg"
+				}
+			},
+			{
 				"id": "tcl",
 				"aliases": [
 					"Tool Command Language"
@@ -216,6 +230,11 @@
 				"path": "./syntaxes/sdc.json"
 			},
 			{
+				"language": "qsf",
+				"scopeName": "source.sdc",
+				"path": "./syntaxes/qsf.json"
+			},
+			{
 				"language": "tcl",
 				"scopeName": "source.tcl",
 				"path": "./syntaxes/tcl/tcl.tmLanguage.json"
@@ -234,6 +253,7 @@
 			"onLanguage:sdc",
 			"onLanguage:xdc",
 			"onLanguage:qip",
+			"onLanguage:qsf",
 			"onLanguage:tcl"
 		],
 		"configuration": {
@@ -247,9 +267,18 @@
 					"description": "The path to verible-verilog-ls executable, e.g.: /usr/bin/verible-verilog-ls.",
 					"order": 0
 				},
+				"mySystemVerilogExtension.languageServer.rules_config": {
+					"type": "string",
+					"default": "./bin/.rules.verible_lint",
+					"items": {
+						"type": "string"
+					},
+					"description": "Verible rules config file path (default: './bin/.rules.verible_lint')",
+					"order": 1
+				},
 				"mySystemVerilogExtension.languageServer.arguments": {
 					"type": "array",
-					"default": ["--rules_file ./bin/rules.verible_lint"],
+					"default": [],
 					"items": {
 						"type": "string"
 					},
