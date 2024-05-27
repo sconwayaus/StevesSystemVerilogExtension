@@ -172,7 +172,7 @@
         "prefix": "task cycles",
         "body": [
             "task automatic cycles( int unsigned n );",
-            "\tassert(n > 0) else $$error(\"Invalid input to cycles\");",
+            "\tassert(n > 0) else \\$error(\"Invalid input to cycles\");",
             "\trepeat(n) @(posedge ${0:clk});",
             "endtask"
         ],
