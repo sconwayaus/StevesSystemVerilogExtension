@@ -1,0 +1,7 @@
+{
+    "set_false_path": {
+      "prefix": "set_false_path",
+      "description": "Specify a false path",
+      "body": ["set_false_path -from $1 -through $2 -to $2"]
+    }
+}

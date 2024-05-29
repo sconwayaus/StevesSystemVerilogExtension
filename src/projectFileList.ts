@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import { posix } from 'path';
-import { APP_CONFIG_PROJECT_FILE_LIST, CMD_CREATE_PROJECT_FILE_LIST } from './constants';
 
 let output;
 
@@ -14,7 +13,7 @@ async function createProjectFileList() {
     if (vscode.workspace.workspaceFolders === undefined) {
         return;
     }
-    const config = vscode.workspace.getConfiguration(APP_CONFIG_PROJECT_FILE_LIST);
+    const config = vscode.workspace.getConfiguration('verible.projectFileList');
     const includeGlobPattern = await config.get('includeGlobPattern') as string;
     const excludeGlobPattern = await config.get('excludeGlobPattern') as string;
     const filelist = await vscode.workspace.findFiles(includeGlobPattern, excludeGlobPattern);
@@ -27,26 +26,26 @@ async function createProjectFileList() {
         writeDataStr += f.fsPath.replace(folderUri.fsPath, ".");
         writeDataStr += "\n";
     });
-    
+
     const writeData = Buffer.from(writeDataStr, 'utf8');
     vscode.workspace.fs.writeFile(fileUri, writeData);
 }
 
-async function createProjectFileListListener(e: vscode.FileCreateEvent) {
+async function createProjectFileListListener() {
     await createProjectFileList();
 }
 
-async function deleteProjectFileListListener(e: vscode.FileDeleteEvent) {
+async function deleteProjectFileListListener() {
     await createProjectFileList();
 }
 
-async function renameProjectFileListListener(e: vscode.FileRenameEvent) {
+async function renameProjectFileListListener() {
     await createProjectFileList();
 }
 
 export async function initProjectFileList(context: vscode.ExtensionContext, out: vscode.OutputChannel) {
     output = out;
-    
+
     // Test to see if verible.filelist exists. If not create one
     const projectFile = "verible.filelist";
     const files = await vscode.workspace.findFiles(projectFile);
@@ -56,7 +55,7 @@ export async function initProjectFileList(context: vscode.ExtensionContext, out:
     } else {
         output.appendLine(projectFile + " already exists");
     }
-    
+
     // Add listeners for file creation, delete or rename events
     context.subscriptions.push(vscode.workspace.onDidCreateFiles(createProjectFileListListener));
     context.subscriptions.push(vscode.workspace.onDidDeleteFiles(deleteProjectFileListListener));
@@ -64,5 +63,5 @@ export async function initProjectFileList(context: vscode.ExtensionContext, out:
 
     // Add a command the user can invoke to create the project file list
     context.subscriptions.push(
-        vscode.commands.registerCommand(CMD_CREATE_PROJECT_FILE_LIST, createProjectFileList));
+        vscode.commands.registerCommand('verible.create_project_file_list', createProjectFileList));
 }

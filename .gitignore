@@ -1,9 +1,8 @@
-out
 node_modules
-client/server
-.vscode-test
-dist
 *.vsix
-examples
-bin/*.exe
-bin/*.sh
+package-lock.json
+README.html
+dist/
+bin/
+/package-lock.json
+client/package-lock.json
