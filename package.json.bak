@@ -4,7 +4,7 @@
 	"description": "My System Verilog Extension",
 	"author": "Steve Conway",
 	"license": "MIT",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sconwayaus/mySystemVerilogExtension"
@@ -19,7 +19,7 @@
 		"multi-root ready"
 	],
 	"engines": {
-		"vscode": "^1.80.0"
+		"vscode": "^1.61.0"
 	},
 	"main": "./dist/extension.js",
 	"icon": "images/icon.png",
@@ -192,10 +192,6 @@
 			{
 				"language": "verilogheader",
 				"path": "./snippets/systemverilog.json"
-			},
-			{
-				"language": "tcl",
-				"path": "./snippets/tcl.json"
 			}
 		],
 		"grammars": [
@@ -270,7 +266,7 @@
 			"type": "object",
 			"title": "My System Verilog Extension",
 			"properties": {
-				"mySystemVerilogExtension.languageServer.path": {
+				"verible.languageServer.path": {
 					"type": "string",
 					"default": "./bin/verible-verilog-ls",
 					"scope": "machine-overridable",
@@ -286,23 +282,23 @@
 					"description": "Verible rules config file path (default: './bin/.rules.verible_lint')",
 					"order": 1
 				},
-				"mySystemVerilogExtension.languageServer.arguments": {
+				"verible.languageServer.arguments": {
 					"type": "array",
-					"default": [],
+					"default": ["", "./bin/.rules.verible_lint"],
 					"items": {
 						"type": "string"
 					},
 					"description": "Arguments for verible-verilog-ls server.",
 					"order": 1
 				},
-				"mySystemVerilogExtension.projectFileList.includeGlobPattern": {
+				"verible.projectFileList.includeGlobPattern": {
 					"type": "string",
 					"default": "{**/*.sv,**/.*v,**/*.svh}",
 					"scope": "machine-overridable",
 					"description": "Include file glob pattern for creating a project file list (verible.filelist).",
 					"order": 2
 				},
-				"mySystemVerilogExtension.projectFileList.excludeGlobPattern": {
+				"verible.projectFileList.excludeGlobPattern": {
 					"type": "string",
 					"default": "{**/db/,**/incremental_db/,**/output/}",
 					"scope": "machine-overridable",
@@ -313,8 +309,8 @@
 		},
 		"commands": [
 			{
-				"command": "mySystemVerilogExtension.create_project_file_list",
-				"title": "MySystemVerilogExtension: Create Project File List (verible.filelist)"
+				"command": "verible.create_project_file_list",
+				"title": "Verible: Create Project File List (verible.filelist)"
 			}
 		]
 	},
@@ -328,7 +324,7 @@
 		"pretest": "npm run compile-tests && npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js",
-		"vsix": "vsce package"
+		"vsix": "vsce package -o verible.vsix"
 	},
 	"devDependencies": {
 		"@types/decompress": "^4.2.4",
