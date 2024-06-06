@@ -1,4 +1,12 @@
-# Verible Language Server Extension
+# Steves System Verilog Extension
+A VS Code extension bundling all the things I want in a System Verilog IDE.
+
+The project draws from multiple projects:
+- https://github.com/chipsalliance/verible
+- https://github.com/eirikpre/VSCode-SystemVerilog
+- https://github.com/mshr-h/vscode-verilog-hdl-support
+- https://github.com/TerosTechnology/vscode-terosHDL
+- https://github.com/bkromhout/vscode-tcl/tree/master
 
 ## Features
 The language server provides a couple of features from the [Verible SystemVerilog productivity suite](https://github.com/chipsalliance/verible) right in the editor.
@@ -28,17 +36,4 @@ The language server provides a couple of features from the [Verible SystemVerilo
      any module instance.
 
 ## Prerequisite on your machine
-
-The Verible plug-in needs the `verible-verilog-ls` executable installed
-on your machine.
-
-On Linux and Windows, the plug-in will try to download the necessary
-executable (if it's not already available).
-
-Get a binary distribution for your Operating System at
-https://github.com/chipsalliance/verible/releases
-
-Alternatively, [build Verible from source](https://github.com/chipsalliance/verible#build).
-
-## Filing Issues
-File bugs on the public [github issue tracker](https://github.com/chipsalliance/verible/issues/new/choose). Provide (sanitized) code examples if needed to illustrate an issue.
+None, all Windows executables are bundled into the extension.
