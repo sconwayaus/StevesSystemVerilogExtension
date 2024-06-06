@@ -13,7 +13,7 @@ async function createProjectFileList() {
     if (vscode.workspace.workspaceFolders === undefined) {
         return;
     }
-    const config = vscode.workspace.getConfiguration('mySystemVerilogExtension.projectFileList');
+    const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension.projectFileList');
     const includeGlobPattern = await config.get('includeGlobPattern') as string;
     const excludeGlobPattern = await config.get('excludeGlobPattern') as string;
     const filelist = await vscode.workspace.findFiles(includeGlobPattern, excludeGlobPattern);
@@ -63,5 +63,5 @@ export async function initProjectFileList(context: vscode.ExtensionContext, out:
 
     // Add a command the user can invoke to create the project file list
     context.subscriptions.push(
-        vscode.commands.registerCommand('verible.create_project_file_list', createProjectFileList));
+        vscode.commands.registerCommand('stevesSystemVerilogExtension.create_project_file_list', createProjectFileList));
 }

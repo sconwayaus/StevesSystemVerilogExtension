@@ -7,7 +7,7 @@
 	"version": "0.1.1",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/sconwayaus/mySystemVerilogExtension"
+		"url": "https://github.com/sconwayaus/StevesSystemVerilogExtension"
 	},
 	"publisher": "SteveCreations",
 	"categories": [
@@ -281,16 +281,16 @@
 		],
 		"configuration": {
 			"type": "object",
-			"title": "My System Verilog Extension",
+			"title": "Steve's System Verilog Extension",
 			"properties": {
-				"mySystemVerilogExtension.languageServer.path": {
+				"stevesSystemVerilogExtension.languageServer.path": {
 					"type": "string",
 					"default": "./bin/verible-verilog-ls",
 					"scope": "machine-overridable",
 					"description": "The path to verible-verilog-ls executable, e.g.: /usr/bin/verible-verilog-ls.",
 					"order": 0
 				},
-				"mySystemVerilogExtension.languageServer.rules_config": {
+				"stevesSystemVerilogExtension.languageServer.rules_config": {
 					"type": "string",
 					"default": "./bin/.rules.verible_lint",
 					"items": {
@@ -299,7 +299,7 @@
 					"description": "Verible rules config file path (default: './bin/.rules.verible_lint')",
 					"order": 1
 				},
-				"mySystemVerilogExtension.languageServer.arguments": {
+				"stevesSystemVerilogExtension.languageServer.arguments": {
 					"type": "array",
 					"default": [],
 					"items": {
@@ -308,14 +308,14 @@
 					"description": "Arguments for verible-verilog-ls server.",
 					"order": 1
 				},
-				"mySystemVerilogExtension.projectFileList.includeGlobPattern": {
+				"stevesSystemVerilogExtension.projectFileList.includeGlobPattern": {
 					"type": "string",
 					"default": "{**/*.sv,**/.*v,**/*.svh}",
 					"scope": "machine-overridable",
 					"description": "Include file glob pattern for creating a project file list (verible.filelist).",
 					"order": 2
 				},
-				"mySystemVerilogExtension.projectFileList.excludeGlobPattern": {
+				"stevesSystemVerilogExtension.projectFileList.excludeGlobPattern": {
 					"type": "string",
 					"default": "{**/db/,**/incremental_db/,**/output/}",
 					"scope": "machine-overridable",
@@ -326,8 +326,8 @@
 		},
 		"commands": [
 			{
-				"command": "mySystemVerilogExtension.create_project_file_list",
-				"title": "MySystemVerilogExtension: Create Project File List (verible.filelist)"
+				"command": "stevesSystemVerilogExtension.create_project_file_list",
+				"title": "StevesSystemVerilogExtension: Create Project File List (verible.filelist)"
 			}
 		]
 	},

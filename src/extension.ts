@@ -6,7 +6,7 @@ import { initProjectFileList } from './projectFileList';
 let client: undefined | vscodelc.LanguageClient = undefined;
 
 async function initLanguageClient(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
-    const config = vscode.workspace.getConfiguration('mySystemVerilogExtension.languageServer');
+    const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension.languageServer');
 
     const binary_path = context.asAbsolutePath(config.get('path') as string);
 
