@@ -1,3 +1,16 @@
 {
-  
+    "set_global_assignment -name SYSTEMVERILOG_FILE": {
+        "prefix": "set_global_assignment -name SYSTEMVERILOG_FILE",
+        "description": "",
+        "body": [
+            "set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) \"${1}\"]$0"
+        ]
+    },
+    "set_global_assignment -name MISC_FILE": {
+        "prefix": "set_global_assignment -name MISC_FILE",
+        "description": "",
+        "body": [
+            "set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) \"${1}\"]$0"
+        ]
+    }
 }
