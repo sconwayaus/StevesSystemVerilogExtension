@@ -1,10 +1,10 @@
 {
 	"name": "steves-system-verilog-extension",
-	"displayName": "MySystemVerilogExtension",
-	"description": "My System Verilog Extension",
+	"displayName": "StevesSystemVerilogExtension",
+	"description": "Steve's System Verilog Extension",
 	"author": "Steve Conway",
 	"license": "MIT",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sconwayaus/mySystemVerilogExtension"
@@ -13,7 +13,8 @@
 	"categories": [
 		"Programming Languages",
 		"Linters",
-		"Formatters"
+		"Formatters",
+		"Snippets"
 	],
 	"keywords": [
 		"multi-root ready"
@@ -108,12 +109,12 @@
 			{
 				"id": "sdc",
 				"aliases": [
-					"Synopsys Design Constraints"
+					"SDC", "Synopsys Design Constraints"
 				],
 				"extensions": [
 					".sdc"
 				],
-				"configuration": "./configs/sdc.json",
+				"configuration": "./configs/tcl.json",
 				"icon": {
 					"light": "./resources/sdc_light.svg",
 					"dark": "./resources/sdc_dark.svg"
@@ -122,12 +123,12 @@
 			{
 				"id": "xdc",
 				"aliases": [
-					"Xilinx Design Constraints"
+					"XDC", "Xilinx Design Constraints"
 				],
 				"extensions": [
 					".xdc"
 				],
-				"configuration": "./configs/sdc.json",
+				"configuration": "./configs/tcl.json",
 				"icon": {
 					"light": "./resources/sdc_light.svg",
 					"dark": "./resources/sdc_dark.svg"
@@ -136,12 +137,12 @@
 			{
 				"id": "qip",
 				"aliases": [
-					"Quartus IP File"
+					"QIP", "Quartus IP File"
 				],
 				"extensions": [
 					".qip"
 				],
-				"configuration": "./configs/sdc.json",
+				"configuration": "./configs/tcl.json",
 				"icon": {
 					"light": "./resources/sdc_light.svg",
 					"dark": "./resources/sdc_dark.svg"
@@ -150,12 +151,12 @@
 			{
 				"id": "qsf",
 				"aliases": [
-					"Quartus Settings File"
+					"QSF", "Quartus Settings File"
 				],
 				"extensions": [
 					".qsf"
 				],
-				"configuration": "./configs/sdc.json",
+				"configuration": "./configs/tcl.json",
 				"icon": {
 					"light": "./resources/sdc_light.svg",
 					"dark": "./resources/sdc_dark.svg"
@@ -164,12 +165,12 @@
 			{
 				"id": "tcl",
 				"aliases": [
-					"Tool Command Language"
+					"TCL", "Tool Command Language"
 				],
 				"extensions": [
 					".tcl"
 				],
-				"configuration": "./configs/sdc.json",
+				"configuration": "./configs/tcl.json",
 				"icon": {
 					"light": "./resources/sdc_light.svg",
 					"dark": "./resources/sdc_dark.svg"
@@ -192,6 +193,18 @@
 			{
 				"language": "verilogheader",
 				"path": "./snippets/systemverilog.json"
+			},
+			{
+				"language": "sdc",
+				"path": "./snippets/sdc.json"
+			},
+			{
+				"language": "qsf",
+				"path": "./snippets/qsf.json"
+			},
+			{
+				"language": "qip",
+				"path": "./snippets/qip.json"
 			},
 			{
 				"language": "tcl",
@@ -227,27 +240,27 @@
 			{
 				"language": "sdc",
 				"scopeName": "source.sdc",
-				"path": "./syntaxes/sdc.json"
+				"path": "./syntaxes/sdc.tmLanguage"
 			},
 			{
 				"language": "xdc",
-				"scopeName": "source.sdc",
-				"path": "./syntaxes/sdc.json"
+				"scopeName": "source.xdc",
+				"path": "./syntaxes/xdc.tmLanguage"
 			},
 			{
 				"language": "qip",
-				"scopeName": "source.sdc",
-				"path": "./syntaxes/sdc.json"
+				"scopeName": "source.qip",
+				"path": "./syntaxes/qip.tmLanguage"
 			},
 			{
 				"language": "qsf",
-				"scopeName": "source.sdc",
-				"path": "./syntaxes/qsf.json"
+				"scopeName": "source.qsf",
+				"path": "./syntaxes/qsf.tmLanguage"
 			},
 			{
 				"language": "tcl",
 				"scopeName": "source.tcl",
-				"path": "./syntaxes/tcl/tcl.tmLanguage.json"
+				"path": "./syntaxes/tcl.tmLanguage"
 			}
 		],
 		"activationEvents": [
