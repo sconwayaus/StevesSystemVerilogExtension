@@ -20,7 +20,7 @@
 		"multi-root ready"
 	],
 	"engines": {
-		"vscode": "^1.80.0"
+		"vscode": "^1.90.0"
 	},
 	"main": "./dist/extension.js",
 	"icon": "images/icon.png",
@@ -109,7 +109,8 @@
 			{
 				"id": "sdc",
 				"aliases": [
-					"SDC", "Synopsys Design Constraints"
+					"SDC",
+					"Synopsys Design Constraints"
 				],
 				"extensions": [
 					".sdc"
@@ -123,7 +124,8 @@
 			{
 				"id": "xdc",
 				"aliases": [
-					"XDC", "Xilinx Design Constraints"
+					"XDC",
+					"Xilinx Design Constraints"
 				],
 				"extensions": [
 					".xdc"
@@ -137,7 +139,8 @@
 			{
 				"id": "qip",
 				"aliases": [
-					"QIP", "Quartus IP File"
+					"QIP",
+					"Quartus IP File"
 				],
 				"extensions": [
 					".qip"
@@ -151,7 +154,8 @@
 			{
 				"id": "qsf",
 				"aliases": [
-					"QSF", "Quartus Settings File"
+					"QSF",
+					"Quartus Settings File"
 				],
 				"extensions": [
 					".qsf"
@@ -165,7 +169,8 @@
 			{
 				"id": "tcl",
 				"aliases": [
-					"TCL", "Tool Command Language"
+					"TCL",
+					"Tool Command Language"
 				],
 				"extensions": [
 					".tcl"
@@ -175,6 +180,13 @@
 					"light": "./resources/sdc_light.svg",
 					"dark": "./resources/sdc_dark.svg"
 				}
+			},
+			{
+				"id": "pd",
+				"extensions": [
+					".pd"
+				],
+				"configuration": "./configs/pd.json"
 			}
 		],
 		"snippets": [
@@ -261,6 +273,11 @@
 				"language": "tcl",
 				"scopeName": "source.tcl",
 				"path": "./syntaxes/tcl.tmLanguage"
+			},
+			{
+				"language": "pd",
+				"scopeName": "source.pd",
+				"path": "./syntaxes/pd.tmLanguage"
 			}
 		],
 		"activationEvents": [
@@ -354,6 +371,7 @@
 		"@typescript-eslint/parser": "^4.33.0",
 		"@vscode/test-electron": "^1.6.2",
 		"@vscode/vsce": "^2.27.0",
+		"esbuild": "^0.21.5",
 		"eslint": "^7.32.0",
 		"glob": "^7.2.3",
 		"mocha": "^9.2.2",
