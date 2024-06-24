@@ -36,7 +36,7 @@ async function initLanguageClient(context: vscode.ExtensionContext, output: vsco
     // Create the language client and start the client.
     output.appendLine("Starting Language Server");
     client = new vscodelc.LanguageClient(
-        'verible',
+        'stevesSystemVerilogExtension',
         'Verible Language Server',
         serverOptions,
         clientOptions
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
     // If a configuration change even it fired, let's dispose
     // of the previous client and create a new one.
     vscode.workspace.onDidChangeConfiguration(async (event) => {
-        if (!event.affectsConfiguration('verible')) {
+        if (!event.affectsConfiguration('stevesSystemVerilogExtension')) {
             return;
         }
         if (!client) {

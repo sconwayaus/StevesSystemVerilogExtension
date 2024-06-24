@@ -1,6 +1,6 @@
 always-comb
 always-comb-blocking
-always-ff-non-blocking=catch_modifying_assignments:true;waive_for_locals:false
+always-ff-non-blocking=catch_modifying_assignments:false;waive_for_locals:false
 banned-declared-name-patterns
 case-missing-default
 constraint-name-style=pattern:([a-z0-9]+_)+c
@@ -20,7 +20,7 @@ forbid-negative-array-dim
 forbidden-macro
 generate-label
 generate-label-prefix
-interface-name-style=style_regex:[a-z_0-9]+
+interface-name-style=style_regex:[a-z_0-9]+(_if)
 invalid-system-task-function
 -legacy-generate-region
 -legacy-genvar-declaration
@@ -30,7 +30,7 @@ macro-name-style=style_regex:[A-Z_0-9]+
 -mismatched-labels
 module-begin-block
 module-filename=allow-dash-for-underscore:false
--module-parameter
+module-parameter
 module-port
 -no-tabs
 -no-trailing-spaces
@@ -38,13 +38,13 @@ numeric-format-string-style
 one-module-per-file
 package-filename=allow-dash-for-underscore:false
 packed-dimensions-range-ordering
-parameter-name-style=localparam_style_regex:[A-Z_0-9]+;parameter_style_regex:[A-Z_0-9]+
--parameter-type-name-style=style_regex:[a-z_0-9]+(_t)
+parameter-name-style=localparam_style_regex:([A-Z0-9]+[a-z0-9]*)+(_[0-9]+)?;parameter_style_regex:(([A-Z0-9]+[a-z0-9]*)+(_[0-9]+)?)|([A-Z_0-9]+)
+parameter-type-name-style=style_regex:[a-z_0-9]+(_t)
 plusarg-assignment
-port-name-suffix=input_suffixes:_in;output_suffixes:_out;inout_suffixes:_inout;interface_suffix_style:modport
+port-name-suffix=input_suffixes:_in;output_suffixes:_out;inout_suffixes:_inout;enable_interface_modport_suffix:false
 positive-meaning-parameter-name
 -posix-eof
--proper-parameter-declaration=package_allow_parameter:false;package_allow_localparam:true
+proper-parameter-declaration=package_allow_parameter:false;package_allow_localparam:true
 signal-name-style=style_regex:[a-z_0-9]+
 struct-union-name-style=style_regex:[a-z_0-9]+(_t)
 suggest-parentheses
