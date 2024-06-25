@@ -4,7 +4,7 @@
 	"description": "Steve's System Verilog Extension",
 	"author": "Steve Conway",
 	"license": "MIT",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sconwayaus/StevesSystemVerilogExtension"
@@ -300,20 +300,11 @@
 			"type": "object",
 			"title": "Steve's System Verilog Extension",
 			"properties": {
-				"stevesSystemVerilogExtension.languageServer.path": {
+				"stevesSystemVerilogExtension.rules_config.svn_path": {
 					"type": "string",
-					"default": "./bin/verible-verilog-ls",
+					"default": "",
 					"scope": "machine-overridable",
-					"description": "The path to verible-verilog-ls executable, e.g.: /usr/bin/verible-verilog-ls.",
-					"order": 0
-				},
-				"stevesSystemVerilogExtension.languageServer.rules_config": {
-					"type": "string",
-					"default": "./bin/.rules.verible_lint",
-					"items": {
-						"type": "string"
-					},
-					"description": "Verible rules config file path (default: './bin/.rules.verible_lint')",
+					"description": "SVN path to a directory containing verible.filelist.\nExample: https://server/repos/trunk/verible_rules",
 					"order": 1
 				},
 				"stevesSystemVerilogExtension.languageServer.arguments": {
@@ -323,21 +314,21 @@
 						"type": "string"
 					},
 					"description": "Arguments for verible-verilog-ls server.",
-					"order": 1
+					"order": 2
 				},
 				"stevesSystemVerilogExtension.projectFileList.includeGlobPattern": {
 					"type": "string",
 					"default": "{**/*.sv,**/.*v,**/*.svh}",
 					"scope": "machine-overridable",
 					"description": "Include file glob pattern for creating a project file list (verible.filelist).",
-					"order": 2
+					"order": 3
 				},
 				"stevesSystemVerilogExtension.projectFileList.excludeGlobPattern": {
 					"type": "string",
 					"default": "{**/db/,**/incremental_db/,**/output/}",
 					"scope": "machine-overridable",
 					"description": "Exclude file glob pattern for creating a project file list (verible.filelist).",
-					"order": 3
+					"order": 4
 				}
 			}
 		},

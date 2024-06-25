@@ -14,6 +14,8 @@ The language server provides a couple of features from the [Verible SystemVerilo
  * **Linting**: Checks your code against a number of
    [lint rules](https://chipsalliance.github.io/verible/lint.html) and provides
    'wiggly lines' with diagnostic output and even offers auto-fixes when available.
+ * ***Configuration***: Linting configuration is now sourced from an SVN repo so 
+   that teams can work from the same set of rules. @see Prerequisites below.
  * **Formatting**: Offers Format Document/Selection according to the Verible
    formatting style. The 'look' can be configured if needed.
  * **Outline**: Shows the high-level structure of your modules and functions in the
@@ -35,5 +37,6 @@ The language server provides a couple of features from the [Verible SystemVerilo
    * **[&#x1F389; New]** `AUTOREG` – declares regs for outputs not connected to
      any module instance.
 
-## Prerequisite on your machine
-None, all Windows executables are bundled into the extension.
+## Prerequisites
+1. An SVN repo with a copy of the verible-verilog-ls.exe and .rules.verible_lint file. A copy of verible and associated rules file are included with this extension, but users will need to add these to their SVN repo.
+2. In the exteions settings, set the svn_path in stevesSystemVerilogExtension.rules_config.svn_path to point to the SVN repo.

@@ -1,6 +1,8 @@
+import { initProjectFileList } from './projectFileList';
+import { svnCheckout } from './svn';
+
 import * as vscode from 'vscode';
 import * as vscodelc from 'vscode-languageclient/node';
-import { initProjectFileList } from './projectFileList';
 
 // Global object to dispose of previous language clients.
 let client: undefined | vscodelc.LanguageClient = undefined;
@@ -8,9 +10,9 @@ let client: undefined | vscodelc.LanguageClient = undefined;
 async function initLanguageClient(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
     const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension.languageServer');
 
-    const binary_path = context.asAbsolutePath(config.get('path') as string);
-
-    const rules_config_arg_value = context.asAbsolutePath(config.get('rules_config') as string);
+    // Source the ls and rules from SVN
+    var binary_path = context.asAbsolutePath("./bin/svn/verible-verilog-ls");
+    const rules_config_arg_value = context.asAbsolutePath("./bin/svn/.rules.verible_lint");
 
     const rules_config_arg = ["--rules_config", rules_config_arg_value];
     const user_args = config.get('arguments') as string;
@@ -44,8 +46,18 @@ async function initLanguageClient(context: vscode.ExtensionContext, output: vsco
     client.start();
 }
 
+async function start_extension(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
+    // Checkout SVN
+    await svnCheckout(context, output);
+
+    // Init code to manage the project file list
+    await initProjectFileList(context, output);
+
+    return initLanguageClient(context, output);
+}
+
 // VSCode entrypoint to bootstrap an extension
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
     const output = vscode.window.createOutputChannel('Verible Language Server');
 
     // If a configuration change even it fired, let's dispose
@@ -55,17 +67,16 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
         if (!client) {
-            return initLanguageClient(context, output);
+            output.append("Config Changed: No Client");
+            return start_extension(context, output);
         }
-        client.stop().finally(() => {
-            initLanguageClient(context, output);
+        client.stop().finally(async () => {
+            output.append("Config Changed...");
+            start_extension(context, output);
         });
     });
 
-    // Init code to manage the project file list
-    initProjectFileList(context, output);
-
-    return initLanguageClient(context, output);
+    return start_extension(context, output);
 }
 
 // Entrypoint to tear it down.
