@@ -325,7 +325,7 @@
 				},
 				"stevesSystemVerilogExtension.projectFileList.excludeGlobPattern": {
 					"type": "string",
-					"default": "{**/db/,**/incremental_db/,**/output/}",
+					"default": "{**/db/*,**/incremental_db/*,**/output/*}",
 					"scope": "machine-overridable",
 					"description": "Exclude file glob pattern for creating a project file list (verible.filelist).",
 					"order": 4
