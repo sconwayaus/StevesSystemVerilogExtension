@@ -1,0 +1,5 @@
+bin
+scripts/e2e.sh
+**/*.ts
+**/tsconfig.json
+!file.ts
