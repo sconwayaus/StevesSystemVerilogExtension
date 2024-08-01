@@ -303,8 +303,8 @@
 				"stevesSystemVerilogExtension.rules_config.svn_path": {
 					"type": "string",
 					"default": "",
-					"scope": "machine-overridable",
-					"description": "SVN path to a directory containing verible.filelist.\nExample: https://server/repos/trunk/verible_rules",
+					"scope": "machine",
+					"description": "SVN path to a directory containing verible.filelist and verible language server.\nExample: https://server/repos/trunk/verible_rules",
 					"order": 1
 				},
 				"stevesSystemVerilogExtension.languageServer.arguments": {
@@ -313,6 +313,7 @@
 					"items": {
 						"type": "string"
 					},
+					"scope": "machine",
 					"description": "Arguments for verible-verilog-ls server.",
 					"order": 2
 				},
@@ -329,6 +330,13 @@
 					"scope": "machine-overridable",
 					"description": "Exclude file glob pattern for creating a project file list (verible.filelist).",
 					"order": 4
+				},
+				"stevesSystemVerilogExtension.update.ignoredExtensions": {
+					"type": "array",
+					"default": [],
+					"scope": "machine",
+					"description": "A json list of extensions that the user has ignored.",
+					"order": 5
 				}
 			}
 		},

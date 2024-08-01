@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as cp from "child_process";
 import * as fs from 'fs';
+import { updateExtension } from './extension';
 
 const execShell = (cmd: string, output: vscode.OutputChannel) =>
     new Promise<string>((resolve, reject) => {
@@ -14,54 +15,8 @@ const execShell = (cmd: string, output: vscode.OutputChannel) =>
     });
 
 async function svnUpdateVSIX(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
-    output.appendLine("Check for new extension");
-    const semverGt = require('semver/functions/gt');
-
-    // Get the current version
-    var current_version = context.extension.packageJSON["version"];
-
-    // See if there is a newer vsix file of the format
-    // "steves-system-verilog-extension-0.2.1.vsix"
-    const root_path = context.asAbsolutePath("./bin/svn/")
-    output.appendLine("Searching for vsix files here: '" + root_path + "'");
-
-    var filelist = fs.readdirSync(root_path).filter(fn => {
-        return fn.startsWith("steves-system-verilog-extension-") && fn.endsWith(".vsix");
-    });
-
-    if (filelist.length == 0) {
-        output.appendLine("No Files Found");
-        return;
-    }
-
-    // Search for the latest version
-    var latest_version = current_version;
-    var latest_version_filename: string = "";
-    filelist.forEach(f => {
-        var file_version = f.replace("steves-system-verilog-extension-", "");
-        file_version = file_version.replace(".vsix", "");
-        output.appendLine("Version Found: '" + file_version + "'");
-        if (semverGt(file_version, latest_version)) {
-            latest_version = file_version;
-            output.appendLine("Found new extesion: " + f);
-            latest_version_filename = f;
-        }
-    });
-
-    // Ask the user if they want to upgrade the extension
-    if (latest_version_filename != "") {
-        vscode.window
-            .showInformationMessage("Found new extension: '" + latest_version_filename + "'\n" + 
-                "Do you want to update?\n", "Yes", "No")
-            .then(answer => {
-                if (answer === "Yes") {
-                    var update_file = root_path + latest_version_filename;
-                    output.appendLine("Updating Extension: " + update_file);
-                    vscode.commands.executeCommand('workbench.extensions.command.installFromVSIX', [vscode.Uri.file(update_file)]);
-                }
-            })
-    }
-
+    const root_path = context.asAbsolutePath("./bin/svn/");
+    await updateExtension(context, root_path, output);
 }
 
 async function isSVNPathOK(svn_path: string, output: vscode.OutputChannel) {
