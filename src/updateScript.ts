@@ -122,6 +122,21 @@ function processSettings(json_settings: any, output: vscode.OutputChannel) {
  * filename in vscode settings (stevesSystemVerilogExtension.update.ignoredExtensions) and not 
  * ask the user again.
  * 
+ * Example JSON:
+ *     "extensions" : {
+ *        "johnstoncode.svn-scm" : {
+ *            "path" : "D:\\Temp\\",
+ *            "filename" : "johnstoncode.svn-scm-2.18.0.vsix"
+ *        },
+ *        "RomanPeshkov.vscode-text-tables" : {
+ *            "path" : "D:\\Temp\\",
+ *            "filename" : "RomanPeshkov.vscode-text-tables-0.1.5.vsix"
+ *        },
+ *        "SteveCreations.steves-system-verilog-extension" : {
+ *          "path" : "D:\\GIT\\StevesSystemVerilogExtension\\",
+ *          "filename" : "steves-system-verilog-extension-0.2.2.vsix"
+ *       }
+ *    }
  * @param json_extensions 
  * @param output 
  */
