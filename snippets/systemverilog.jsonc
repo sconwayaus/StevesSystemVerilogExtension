@@ -35,8 +35,50 @@
         "prefix": "always_ff",
         "description": "Snippet for an always_ff block",
         "body": [
-            "always_ff @(posedge ${1:clk}${3:, negedge ${2:n_reset}}) begin",
-            "\tif(!${2:n_reset}) begin",
+            "always_ff @(posedge ${1:clk}) begin",
+            "\t$0",
+            "end"
+        ]
+    },
+    "always_ff_n_areset": {
+        "prefix": "always_ff_n_areset",
+        "description": "Snippet for an always_ff block",
+        "body": [
+            "always_ff @(posedge ${1:clk}, ${3:negedge} ${2:n_areset}) begin",
+            "\tif(!${2:n_areset}) begin",
+            "\t\t$0",
+            "\tend",
+            "\telse begin",
+            "\t\t",
+            "\tend",
+            "end"
+        ]
+    },
+    "always_ff_n_areset_n_sreset": {
+        "prefix": "always_ff_all_reset",
+        "description": "Snippet for an always_ff block",
+        "body": [
+            "always_ff @(posedge ${1:clk}, ${3:negedge} ${2:n_areset}) begin",
+            "\tif(!${2:n_areset}) begin",
+            "\t\t$0",
+            "\tend",
+            "\telse begin",
+            "\t\tif(!${3:n_sreset}) begin",
+            "\t\t\t",
+            "\t\tend",
+            "\t\telse begin",
+            "\t\t\t",
+            "\t\tend",
+            "\tend",
+            "end"
+        ]
+    },
+    "always_ff_n_sreset": {
+        "prefix": "always_ff_n_sreset",
+        "description": "Snippet for an always_ff block",
+        "body": [
+            "always_ff @(posedge ${1:clk}) begin",
+            "\tif(!${2:n_sreset}) begin",
             "\t\t$0",
             "\tend",
             "\telse begin",
@@ -361,6 +403,29 @@
             "// -------------------------------------------------------\n$0"
         ]
     },
+    "header": {
+        "prefix": "header",
+        "description": "Snippet for a file header",
+        "body": [
+            "// -------------------------------------------------------",
+            "// -- ${TM_FILENAME_BASE}",
+            "// -------------------------------------------------------",
+            "// ${0:description}",
+            "// ",
+            "// TIMING DIAGRAM:",
+            "// TBA",
+            "// ",
+            "// BLOCK DIAGRAM:",
+            "// TBA",
+            "// ",
+            "// PARAMETERS:",
+            "// ",
+            "// INSTANTIATION TEMPLATE:",
+            "// TBA",
+            "// ",
+            "// -------------------------------------------------------\n"
+        ]
+    },
     "heading": {
         "prefix": "heading",
         "description": "Snippet for a heading",
@@ -377,8 +442,8 @@
             "// -------------------------------------------------------",
             "// -- ${1:heading}",
             "// -------------------------------------------------------",
-            "// ${2:description}",
-            "// -------------------------------------------------------\n$0"
+            "// ${0:description}",
+            "// -------------------------------------------------------\n"
         ]
     },
     "synthesis translate off": {
@@ -402,7 +467,7 @@
 
     // std::randomize
     "std::randomize basic": {
-        "prefix": "std_rand",
+        "prefix": "std::randomize",
         "body": [
             "if (!std::randomize(${1:var})) begin",
             "  \\$fatal(1, \"Randomization failed for ${1:var}\");",
@@ -410,8 +475,8 @@
         ],
         "description": "Standard scope randomize with status check"
     },
-    "std::randomize with inline constraints": {
-        "prefix": "std_rand_with",
+    "std::randomize multiple variables with inline constraints": {
+        "prefix": "std::randomize_with",
         "body": [
             "if (!std::randomize(${1:var1}, ${2:var2}) with {",
             "  ${1:var1} inside {[${3:0}:${4:255}]};",
@@ -423,7 +488,7 @@
         "description": "Standard scope randomize using an inline 'with' constraint block"
     },
     "object.randomize with inline constraints": {
-        "prefix": "std_rand_with",
+        "prefix": ".randomize_with",
         "body": [
             "if (!${1:obj}.randomize() with {",
             "  ${2:field} inside {[${3:min}:${4:max}]};",
@@ -435,17 +500,47 @@
         "description": "Class object randomization with custom inline constraints"
     },
     "std::randomize unique array elements": {
-        "prefix": "std_rand_unique",
+        "prefix": "std::randomize_unique",
         "body": [
             "if (!std::randomize(${1:arr}) with {",
+            "  ${1:arr}.size() == ${2:100};",
             "  unique {${1:arr}};",
             "  foreach (${1:arr}[i]) {",
-            "    ${1:arr}[i] inside {[${2:0}:${3:100}]};",
+            "    ${1:arr}[i] inside {[${3:0}:${4:100}]};",
             "  }",
             "}) begin",
             "  \\$fatal(1, \"Unique array randomization failed\");",
             "end$0"
         ],
         "description": "Randomize local array elements using unique and distribution constraints"
+    },
+    "input_module": {
+        "prefix": "input_module",
+        "body": [
+            "input wire ${1:[1:0]}\t\t$0${2:port_name}_in,"
+        ],
+        "description": "Input port for a module"
+    },
+    "output_module": {
+        "prefix": "output_module",
+        "body": [
+            "output logic ${1:[1:0]}\t\t$0${2:port_name}_out,"
+        ],
+        "description": "Output port for a module"
+    },
+    "default_nettype_none": {
+        "prefix": "default_nettype_none",
+        "body": [
+            "`default_nettype none${0}"
+        ],
+        "description": "default_nettype none, make this the first line in the file"
+    },
+    "default_nettype_wire": {
+        "prefix": "default_nettype_wire",
+        "body": [
+            "`default_nettype wire${0}"
+        ],
+        "description": "Restore default_nettype to the default wire"
     }
+
 }
