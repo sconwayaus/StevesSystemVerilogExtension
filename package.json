@@ -4,7 +4,7 @@
 	"description": "Steve's System Verilog Extension",
 	"author": "Steve Conway",
 	"license": "MIT",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sconwayaus/StevesSystemVerilogExtension"
@@ -32,7 +32,6 @@
 					".sv"
 				],
 				"aliases": [
-					"System Verilog",
 					"systemverilog",
 					"System Verilog",
 					"Systemverilog"
@@ -192,23 +191,27 @@
 		"snippets": [
 			{
 				"language": "systemverilog",
-				"path": "./snippets/systemverilog.json"
+				"path": "./snippets/systemverilog.jsonc"
 			},
 			{
 				"language": "verilog",
-				"path": "./snippets/systemverilog.json"
+				"path": "./snippets/systemverilog.jsonc"
 			},
 			{
 				"language": "systemverilogheader",
-				"path": "./snippets/systemverilog.json"
+				"path": "./snippets/systemverilog.jsonc"
 			},
 			{
 				"language": "verilogheader",
-				"path": "./snippets/systemverilog.json"
+				"path": "./snippets/systemverilog.jsonc"
 			},
 			{
 				"language": "sdc",
 				"path": "./snippets/sdc.json"
+			},
+			{
+				"language": "xdc",
+				"path": "./snippets/xdc.json"
 			},
 			{
 				"language": "qsf",
@@ -220,7 +223,7 @@
 			},
 			{
 				"language": "tcl",
-				"path": "./snippets/tcl.json"
+				"path": "./snippets/tcl.jsonc"
 			}
 		],
 		"grammars": [
@@ -285,10 +288,6 @@
 			"onLanguage:verilog",
 			"onLanguage:systemverilogheader",
 			"onLanguage:verilogheader",
-			"onLanguage:systemverilog",
-			"onLanguage:verilog",
-			"onLanguage:systemverilogheader",
-			"onLanguage:verilogheader",
 			"onLanguage:verilog-filelist",
 			"onLanguage:sdc",
 			"onLanguage:xdc",
@@ -319,7 +318,7 @@
 				},
 				"stevesSystemVerilogExtension.projectFileList.includeGlobPattern": {
 					"type": "string",
-					"default": "{**/*.sv,**/.*v,**/*.svh}",
+					"default": "{**/*.sv,**/*.*v,**/*.svh}",
 					"scope": "machine-overridable",
 					"description": "Include file glob pattern for creating a project file list (verible.filelist).",
 					"order": 3
@@ -362,27 +361,46 @@
 	"devDependencies": {
 		"@types/decompress": "^4.2.7",
 		"@types/follow-redirects": "^1.14.4",
-		"@types/glob": "^7.2.0",
-		"@types/mocha": "^9.1.1",
-		"@types/node": "^14.18.63",
-		"@types/vscode": "^1.90.0",
-		"@typescript-eslint/eslint-plugin": "^4.33.0",
-		"@typescript-eslint/parser": "^4.33.0",
-		"@vscode/test-electron": "^1.6.2",
-		"@vscode/vsce": "^2.27.0",
-		"esbuild": "^0.21.5",
-		"eslint": "^7.32.0",
-		"mocha": "^9.2.2",
-		"ts-loader": "^9.5.1",
-		"typescript": "^4.9.5",
-		"webpack": "^5.91.0",
-		"webpack-cli": "^4.10.0"
+		"@types/mocha": "^10.0.10",
+		"@types/node": "^26.6.6",
+		"@types/vscode": "^1.144.0",
+		"@typescript-eslint/eslint-plugin": "^8.18.0",
+		"@typescript-eslint/parser": "^8.18.0",
+		"eslint": "^10.0.0",
+		"@vscode/test-electron": "^3.1.0",
+		"@vscode/vsce": "^4.1.0",
+		"esbuild": "^0.28.2",
+		"esbuild-loader": "^4.5.0",
+		"mocha": "^11.0.0",
+		"ts-loader": "^9.6.2",
+		"typescript": "^5.6.3",
+		"webpack": "^5.112.2",
+		"webpack-cli": "^7.2.3"
 	},
 	"dependencies": {
-		"decompress": "^4.2.1",
 		"decompress-targz": "^4.1.1",
-		"follow-redirects": "^1.15.6",
-		"semver": "^7.6.2",
-		"vscode-languageclient": "^7.0.0"
+		"follow-redirects": "^1.16.2",
+		"glob": "^14.0.3",
+		"semver": "^7.8.5",
+		"vscode-languageclient": "^9.0.1"
+	},
+	"allowScripts": {
+		"esbuild@0.28.2": true,
+		"@vscode/vsce-sign@2.1.0": true
+	},
+	"overrides": {
+		"minimatch": "^11.0.1",
+		"glob": "^14.0.3",
+		"cross-spawn": "^6.0.6",
+		"ajv": "^6.14.0",
+		"diff": "^8.0.3",
+		"serialize-javascript": "^7.1.3",
+		"tmp": "^0.2.6",
+		"@typescript-eslint/parser": {
+			"typescript": "$typescript"
+		},
+		"@typescript-eslint/eslint-plugin": {
+			"typescript": "$typescript"
+		}
 	}
 }

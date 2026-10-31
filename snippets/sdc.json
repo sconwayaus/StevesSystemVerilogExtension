@@ -1,7 +1,101 @@
 {
-    "set_false_path": {
-      "prefix": "set_false_path",
-      "description": "Specify a false path",
-      "body": ["set_false_path -from $1 -through $2 -to $3"]
+    "Create Clock": {
+        "scope": "sdc,tcl",
+        "prefix": "create_clock",
+        "body": [
+            "create_clock -name ${1:clk_name} -period ${2:10.000} [get_ports {${3:clk_port}}]"
+        ],
+        "description": "Define a primary clock constraint"
+    },
+    "Create Generated Clock": {
+        "scope": "sdc,tcl",
+        "prefix": "create_generated_clock",
+        "body": [
+            "create_generated_clock -name ${1:gen_clk_name} -source [get_pins {${2:source_pin}}] -multiply_by ${3:1} -divide_by ${4:1} [get_pins {${5:target_pin}}]"
+        ],
+        "description": "Define a generated clock (e.g., from a PLL or clock divider)"
+    },
+    "Derive PLL Clocks": {
+        "scope": "sdc,tcl",
+        "prefix": "derive_pll_clocks",
+        "body": [
+            "derive_pll_clocks -create_base_clocks"
+        ],
+        "description": "Automatically create constraints for all PLL outputs in Quartus"
+    },
+    "Derive Clock Uncertainty": {
+        "scope": "sdc,tcl",
+        "prefix": "derive_clock_uncertainty",
+        "body": [
+            "derive_clock_uncertainty"
+        ],
+        "description": "Automatically calculate and apply clock uncertainty/jitter"
+    },
+    "Set Input Delay": {
+        "scope": "sdc,tcl",
+        "prefix": "set_input_delay",
+        "body": [
+            "set_input_delay -clock [get_clocks {${1:clk_name}}] -max ${2:2.0} [get_ports {${3:input_ports}}]",
+            "set_input_delay -clock [get_clocks {${1:clk_name}}] -min ${4:0.5} [get_ports {${3:input_ports}}]"
+        ],
+        "description": "Specify input delay relative to a clock"
+    },
+    "Set Output Delay": {
+        "scope": "sdc,tcl",
+        "prefix": "set_output_delay",
+        "body": [
+            "set_output_delay -clock [get_clocks {${1:clk_name}}] -max ${2:2.0} [get_ports {${3:output_ports}}]",
+            "set_output_delay -clock [get_clocks {${1:clk_name}}] -min ${4:0.5} [get_ports {${3:output_ports}}]"
+        ],
+        "description": "Specify output delay relative to a clock"
+    },
+    "Set False Path": {
+        "scope": "sdc,tcl",
+        "prefix": "set_false_path",
+        "body": [
+            "set_false_path -from [get_clocks {${1:clk_src}}] -to [get_clocks {${2:clk_dst}}]"
+        ],
+        "description": "Declare a false path between two clock domains (Clock Domain Crossing)"
+    },
+    "Set Multicycle Path": {
+        "scope": "sdc,tcl",
+        "prefix": "set_multicycle_path",
+        "body": [
+            "set_multicycle_path -setup -end -from [get_clocks {${1:clk_src}}] -to [get_clocks {${2:clk_dst}}] ${3:2}",
+            "set_multicycle_path -hold -end -from [get_clocks {${1:clk_src}}] -to [get_clocks {${2:clk_dst}}] ${4:1}"
+        ],
+        "description": "Specify a multicycle path constraint for setup and hold"
+    },
+    "Set Clock Groups (Asynchronous)": {
+        "scope": "sdc,tcl",
+        "prefix": "set_clock_groups",
+        "body": [
+            "set_clock_groups -asynchronous -group [get_clocks {${1:clk_a}}] -group [get_clocks {${2:clk_b}}]"
+        ],
+        "description": "Cut timing paths between mutually asynchronous clock groups"
+    },
+    "Get Ports": {
+        "scope": "sdc,tcl",
+        "prefix": "get_ports",
+        "body": [
+            "[get_ports {${1:port_name}}]"
+        ],
+        "description": "Query an FPGA top-level design port"
+    },
+    "Get Pins": {
+        "scope": "sdc,tcl",
+        "prefix": "get_pins",
+        "body": [
+            "[get_pins {${1:instance_name|pin_name}}]"
+        ],
+        "description": "Query an internal netlist instance pin"
+    },
+    "Get Keepers": {
+        "scope": "sdc,tcl",
+        "prefix": "get_keepers",
+        "body": [
+            "[get_keepers {${1:keeper_name}}]"
+        ],
+        "description": "Query timing netlist keepers (non-combinational nodes like registers, I/O ports, and RAM blocks)"
     }
 }

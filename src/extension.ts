@@ -9,7 +9,7 @@ import { runUpdateScript } from './updateScript';
 // Global object to dispose of previous language clients.
 let client: undefined | vscodelc.LanguageClient = undefined;
 
-async function initLanguageClient(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
+async function initLanguageClient(context: vscode.ExtensionContext, output: vscode.LogOutputChannel) {
     const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension.languageServer');
 
     // Source the ls and rules from SVN
@@ -48,7 +48,7 @@ async function initLanguageClient(context: vscode.ExtensionContext, output: vsco
     client.start();
 }
 
-async function start_extension(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
+async function start_extension(context: vscode.ExtensionContext, output: vscode.LogOutputChannel) {
     // Checkout SVN
     await svnCheckout(context, output);
 
@@ -62,7 +62,7 @@ async function start_extension(context: vscode.ExtensionContext, output: vscode.
 
 // VSCode entrypoint to bootstrap an extension
 export async function activate(context: vscode.ExtensionContext) {
-    const output = vscode.window.createOutputChannel('Steves SystemVerilog Extension');
+    const output = vscode.window.createOutputChannel('Steves SystemVerilog Extension', { log: true }) as vscode.LogOutputChannel;
 
     // If a configuration change even it fired, let's dispose
     // of the previous client and create a new one.
@@ -91,7 +91,7 @@ export function deactivate(): Thenable<void> | undefined {
     return client.stop();
 }
 
-export async function updateExtension(context: vscode.ExtensionContext, root_path:string, output: vscode.OutputChannel) {
+export async function updateExtension(context: vscode.ExtensionContext, root_path:string, output: vscode.LogOutputChannel) {
     output.appendLine("Check for new extension");
     const semverGt = require('semver/functions/gt');
 

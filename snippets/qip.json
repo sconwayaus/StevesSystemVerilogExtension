@@ -1,16 +1,46 @@
 {
-    "set_global_assignment -name SYSTEMVERILOG_FILE": {
-        "prefix": "set_global_assignment -name SYSTEMVERILOG_FILE",
-        "description": "",
+    "Add Verilog File": {
+        "prefix": "qip_v",
         "body": [
-            "set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) \"${1}\"]$0"
-        ]
+            "set_global_assignment -name VERILOG_FILE [file join \\$::quartus(qip_path) \"${1:file_name}.v\"]"
+        ],
+        "description": "Adds a Verilog source file reference relative to the QIP path."
     },
-    "set_global_assignment -name MISC_FILE": {
-        "prefix": "set_global_assignment -name MISC_FILE",
-        "description": "",
+    "Add SystemVerilog File": {
+        "prefix": "qip_sv",
         "body": [
-            "set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) \"${1}\"]$0"
-        ]
+            "set_global_assignment -name SYSTEMVERILOG_FILE [file join \\$::quartus(qip_path) \"${1:file_name}.sv\"]"
+        ],
+        "description": "Adds a SystemVerilog source file reference relative to the QIP path."
+    },
+    "Add SDC Constraint File": {
+        "prefix": "qip_sdc",
+        "body": [
+            "set_global_assignment -name SDC_FILE [file join \\$::quartus(qip_path) \"${1:file_name}.sdc\"]"
+        ],
+        "description": "Adds an SDC timing constraints file reference relative to the QIP path."
+    },
+    "Add Nested QIP File": {
+        "prefix": "qip_qip",
+        "body": [
+            "set_global_assignment -name QIP_FILE [file join \\$::quartus(qip_path) \"${1:sub_module}.qip\"]"
+        ],
+        "description": "References another child QIP file inside this QIP bundle."
+    },
+    "Add Hex/Mif Memory Initialization File": {
+        "prefix": "qip_mif",
+        "body": [
+            "set_global_assignment -name MISC_FILE [file join \\$::quartus(qip_path) \"${1:memory_init}.${2|mif,hex|}\"]"
+        ],
+        "description": "Adds memory initialization files (MIF or HEX) as miscellaneous support files."
+    },
+    "Safe 32-bit Variable Logic": {
+        "prefix": "set_32bit_variables",
+        "body": [
+            "if { \\$::quartus(qip_path) eq \"\" } {",
+            "    set ::quartus(qip_path) [file dirname [file normalize [info script]]]",
+            "}"
+        ],
+        "description": "Ensures the qip_path global variable is set safely if executing standalone."
     }
 }

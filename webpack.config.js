@@ -30,13 +30,13 @@ const extensionConfig = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         exclude: ["/node_modules/", "/bin/"],
-        use: [
-          {
-            loader: 'ts-loader'
-          }
-        ]
+        loader: 'esbuild-loader',
+        options: {
+          loader: 'ts', // Or 'tsx' if you use React JSX
+          target: 'es2022' 
+        }
       }
     ]
   },

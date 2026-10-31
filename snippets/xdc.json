@@ -1,0 +1,86 @@
+{
+    "Clock Creation (Primary)": {
+        "prefix": "create_clock",
+        "body": [
+            "create_clock -period ${1:10.000} -name ${2:sys_clk} -waveform {0.000 ${3:5.000}} [get_ports ${4:sys_clk_pin}]"
+        ],
+        "description": "Define a primary clock constraint with period, name, duty cycle, and target port."
+    },
+    "Clock Creation (Virtual)": {
+        "prefix": "create_clock_virtual",
+        "body": [
+            "create_clock -period ${1:10.000} -name ${2:virtual_clk}"
+        ],
+        "description": "Define a virtual clock constraint for input/output delay referencing."
+    },
+    "Generated Clock (Divide by 2)": {
+        "prefix": "create_generated_clock",
+        "body": [
+            "create_generated_clock -name ${1:clk_div2} -source [get_pins ${2:instance/CLKIN}] -divide_by 2 [get_pins ${3:instance/CLKOUT}]"
+        ],
+        "description": "Define a generated clock tracking a frequency-divided clock source."
+    },
+    "Input Delay Constraint": {
+        "prefix": "set_input_delay",
+        "body": [
+            "set_input_delay -clock [get_clocks ${1:sys_clk}] -max ${2:4.000} [get_ports ${3:input_ports}]",
+            "set_input_delay -clock [get_clocks ${1:sys_clk}] -min ${4:1.000} [get_ports ${3:input_ports}]"
+        ],
+        "description": "Set both maximum and minimum input delay constraints relative to a clock."
+    },
+    "Output Delay Constraint": {
+        "prefix": "set_output_delay",
+        "body": [
+            "set_output_delay -clock [get_clocks ${1:sys_clk}] -max ${2:3.000} [get_ports ${3:output_ports}]",
+            "set_output_delay -clock [get_clocks ${1:sys_clk}] -min ${4:-0.500} [get_ports ${3:output_ports}]"
+        ],
+        "description": "Set both maximum and minimum output delay constraints relative to a clock."
+    },
+    "Asynchronous Clock Groups": {
+        "prefix": "set_clock_groups_asynch",
+        "body": [
+            "set_clock_groups -asynchronous -group [get_clocks ${1:clk_a}] -group [get_clocks ${2:clk_b}]"
+        ],
+        "description": "Isolate asynchronous clock domains from timing analysis."
+    },
+    "False Path": {
+        "prefix": "set_false_path",
+        "body": [
+            "set_false_path -from [get_pins ${1:source_pins}] -to [get_pins ${2:destination_pins}]"
+        ],
+        "description": "Ignore timing paths between specific startpoints and endpoints."
+    },
+    "Max Delay Constraint": {
+        "prefix": "set_max_delay",
+        "body": [
+            "set_max_delay ${1:5.000} -from [get_pins ${2:source_pins}] -to [get_pins ${3:destination_pins}]"
+        ],
+        "description": "Enforce an absolute maximum delay requirement on a path."
+    },
+    "Multicycle Path": {
+        "prefix": "set_multicycle_path",
+        "body": [
+            "set_multicycle_path ${1:2} -setup -from [get_pins ${2:source_pins}] -to [get_pins ${3:destination_pins}]",
+            "set_multicycle_path ${4:1} -hold -from [get_pins ${2:source_pins}] -to [get_pins ${3:destination_pins}]"
+        ],
+        "description": "Specify a multicycle path requirement for setup and hold edges."
+    },
+    "Pin Location and IO Standard": {
+        "prefix": "set_property_pin",
+        "body": [
+            "set_property -dict { PACKAGE_PIN ${1:A1}   IOSTANDARD ${2:LVCMOS33} } [get_ports { ${3:port_name} }]"
+        ],
+        "description": "Bind a physical FPGA package pin and define its IO Standard on a single line."
+    },
+    "Configuration Bitstream Properties": {
+        "prefix": "set_config_properties",
+        "body": [
+            "set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]",
+            "set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]",
+            "set_property BITSTREAM.CONFIG.CONFIGRATE 33 [current_design]",
+            "set_property CONFIG_VOLTAGE 3.3 [current_design]",
+            "set_property CFGBVS VCCO [current_design]"
+        ],
+        "description": "Standard configuration and SPI flash memory bitstream settings boilerplate."
+    }
+}

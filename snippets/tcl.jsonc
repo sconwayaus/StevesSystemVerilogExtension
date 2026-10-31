@@ -1,0 +1,262 @@
+{
+    // ==========================================
+    // 1. CORE CONTROL STRUCTURES & PROCS
+    // ==========================================
+    "Proc Command": {
+        "prefix": "proc",
+        "description": "Specify a Tcl procedure",
+        "body": [
+            "proc ${1:name} {${2:args}} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "If Condition": {
+        "prefix": "if",
+        "description": "If statement",
+        "body": [
+            "if {${1:expression}} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "If-Else Condition": {
+        "prefix": "ifelse",
+        "description": "If-else statement",
+        "body": [
+            "if {${1:expression}} {",
+            "\t${2:# then...}",
+            "} else {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "For Loop": {
+        "prefix": "for",
+        "description": "Standard Tcl for loop",
+        "body": [
+            "for {set ${1:i} 0} {\\$${1:i} < ${2:limit}} {incr ${1:i}} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "Foreach Loop": {
+        "prefix": "foreach",
+        "description": "Iterate over a list",
+        "body": [
+            "foreach ${1:item} ${2:\\$list} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "While Loop": {
+        "prefix": "while",
+        "description": "While loop condition",
+        "body": [
+            "while {${1:expression}} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "Switch Case": {
+        "prefix": "switch",
+        "description": "Switch pattern match block",
+        "body": [
+            "switch -exact -- \\$${1:variable} {",
+            "\t\"${2:match1}\" {",
+            "\t\t$3",
+            "\t}",
+            "\t\"${4:match2}\" {",
+            "\t\t$5",
+            "\t}",
+            "\tdefault {",
+            "\t\t$0",
+            "\t}",
+            "}"
+        ]
+    },
+    // ==========================================
+    // 2. ARRAY OPERATIONS
+    // ==========================================
+    "Array Set": {
+        "prefix": "arr_set",
+        "description": "Initialise or set key-value pairs in an associative array",
+        "body": [
+            "array set ${1:array_name} {",
+            "\t${2:key1} \"${3:value1}\"",
+            "\t${4:key2} \"${5:value2}\"",
+            "}"
+        ]
+    },
+    "Array Forach Loop": {
+        "prefix": "arr_foreach",
+        "description": "Iterate through keys and values of an associative array",
+        "body": [
+            "foreach ${1:key} [array names ${2:array_name}] {",
+            "\tset ${3:val} \\$${2:array_name}(\\$${1:key})",
+            "\t$0",
+            "}"
+        ]
+    },
+    "Array Exists Check": {
+        "prefix": "arr_exists",
+        "description": "Check if an element exists in an array",
+        "body": [
+            "if {[info exists ${1:array_name}(\\$${2:key})]} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    // ==========================================
+    // 3. FILE OPERATIONS (I/O)
+    // ==========================================
+    "File Read Entire": {
+        "prefix": "file_read",
+        "description": "Open, read entire file content, and close it safely",
+        "body": [
+            "set ${1:fp} [open \"${2:filename.txt}\" r]",
+            "set ${3:file_data} [read \\$${1:fp}]",
+            "close \\$${1:fp}",
+            "$0"
+        ]
+    },
+    "File Read Line-by-Line": {
+        "prefix": "file_lines",
+        "description": "Loop through a text file line by line",
+        "body": [
+            "set ${1:fp} [open \"${2:filename.txt}\" r]",
+            "while {[gets \\$${1:fp} ${3:line}] >= 0} {",
+            "\t$0",
+            "}",
+            "close \\$${1:fp}"
+        ]
+    },
+    "File Write/Append": {
+        "prefix": "file_write",
+        "description": "Open file for writing or appending text",
+        "body": [
+            "set ${1:fp} [open \"${2:filename.txt}\" ${3|w,a|}]",
+            "puts \\$${1:fp} \"${4:your text here}\"",
+            "close \\$${1:fp}"
+        ]
+    },
+    "File Check Block": {
+        "prefix": "file_check",
+        "description": "Verify if a file exists and is a regular file before operating",
+        "body": [
+            "if {[file exists \"${1:path}\"] && [file isfile \"${1:path}\"]} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    // ==========================================
+    // 4. LIST HANDLING
+    // ==========================================
+    "List Append": {
+        "prefix": "lappend",
+        "description": "Append elements dynamically to an existing list",
+        "body": [
+            "lappend ${1:list_name} ${2:element}"
+        ]
+    },
+    "List Index Search": {
+        "prefix": "lsearch",
+        "description": "Find an index matching a pattern in a list",
+        "body": [
+            "set ${1:idx} [lsearch -exact \\$${2:list_name} \"${3:search_term}\"]"
+        ]
+    },
+    // ==========================================
+    // 5. STRINGS & REGEX
+    // ==========================================
+    "Regex Match": {
+        "prefix": "regexp",
+        "description": "Extract data using regular expressions with match variables",
+        "body": [
+            "if {[regexp {${1:\\bpattern\\b}} \\$${2:string_var} ${3:match_var}]} {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "String Map": {
+        "prefix": "strmap",
+        "description": "Perform character/substring mapping conversions",
+        "body": [
+            "set ${1:clean_string} [string map {${2:search} ${3:replace}} \\$${4:source_var}]"
+        ]
+    },
+    // ==========================================
+    // 6. ERROR & EXCEPTION HANDLING
+    // ==========================================
+    "Catch Try Block": {
+        "prefix": "catch",
+        "description": "Execute risky code safely without crashing execution flow",
+        "body": [
+            "if {[catch {",
+            "\t$1",
+            "} ${2:err_msg}]} {",
+            "\tputs \"Operation failed: \\$${2:err_msg}\"",
+            "} else {",
+            "\t$0",
+            "}"
+        ]
+    },
+    // ==========================================
+    // 7. QUARTUS SPECIFIC COMMANDS
+    // ==========================================
+    "Quartus Open Project": {
+        "prefix": "qopen",
+        "description": "Load the required Quartus packages and open a project safely",
+        "body": [
+            "package require ::quartus::project",
+            "",
+            "if {[project_exists ${1:project_name}]} {",
+            "\tproject_open ${1:project_name} -current_revision",
+            "\t$0",
+            "} else {",
+            "\tpost_message -type error \"Project ${1:project_name} does not exist.\"",
+            "}"
+        ]
+    },
+    "Quartus Close Project": {
+        "prefix": "qclose",
+        "description": "Save and close the current Quartus project",
+        "body": [
+            "project_close"
+        ]
+    },
+    "Quartus Set Instance Assignment": {
+        "prefix": "qset_inst",
+        "description": "Assign a setting or constraint to a specific pin or instance",
+        "body": [
+            "set_instance_assignment -name ${1:ASSIGNMENT_NAME} -to ${2:pin_or_node_name} -value ${3:value}"
+        ]
+    },
+    "Quartus Set Global Assignment": {
+        "prefix": "qset_glob",
+        "description": "Set a project-wide global assignment",
+        "body": [
+            "set_global_assignment -name ${1:ASSIGNMENT_NAME} ${2:value}"
+        ]
+    },
+    "Quartus Post Message": {
+        "prefix": "qmsg",
+        "description": "Print a message to the Quartus processing window",
+        "body": [
+            "post_message -type ${1|info,warning,error,extra_info|} \"$0\""
+        ]
+    },
+    "Quartus Collection Loop": {
+        "prefix": "qforeach",
+        "description": "Iterate through a Quartus node/pin collection (e.g. from get_names)",
+        "body": [
+            "package require ::quartus::advanced_timing",
+            "",
+            "set ${1:collection} [get_timing_nodes -type ${2|pin,reg,comb|}]",
+            "foreach_in_collection ${3:node} \\$${1:collection} {",
+            "\tset ${4:name} [get_timing_node_info -info name \\$${3:node}]",
+            "\t$0",
+            "}"
+        ]
+    }
+}
