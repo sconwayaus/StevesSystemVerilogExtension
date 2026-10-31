@@ -1,52 +1,175 @@
 {
     "comments": {
         "lineComment": "//",
-        "blockComment": ["/*", "*/"]
+        "blockComment": [
+            "/*",
+            "*/"
+        ]
     },
     "brackets": [
-        ["{", "}"],
-        ["[", "]"],
-        ["(", ")"],
-        ["begin", "end"],
-        ["randcase", "endcase"],
-        ["casex", "endcase"],
-        ["casez", "endcase"],
-        ["case", "endcase"],
-        ["checker", "endchecker"],
-        ["class", "endclass"],
-        ["clocking", "endclocking"],
-        ["config", "endconfig"],
-        ["coverage", "endcoverage"],
-        ["covergroup", "endgroup"],
-        ["fork", "join"],
-        ["fork", "join_any"],
-        ["fork", "join_none"],
-        ["function", "endfunction"],
-        ["generate", "endgenerate"],
-        ["interface", "endinterface"],
-        ["macromodule", "endmodule"],
-        ["module", "endmodule"],
-        ["package", "endpackage"],
-        ["primitive", "endprimitive"],
-        ["program", "endprogram"],
-        ["property", "endproperty"],
-        ["specify", "endspecify"],
-        ["sequence", "endsequence"],
-        ["table", "endtable"],
-        ["task", "endtask"]
+        [
+            "{",
+            "}"
+        ],
+        [
+            "[",
+            "]"
+        ],
+        [
+            "(",
+            ")"
+        ],
+        [
+            "begin",
+            "end"
+        ],
+        [
+            "randcase",
+            "endcase"
+        ],
+        [
+            "casex",
+            "endcase"
+        ],
+        [
+            "casez",
+            "endcase"
+        ],
+        [
+            "case",
+            "endcase"
+        ],
+        [
+            "checker",
+            "endchecker"
+        ],
+        [
+            "class",
+            "endclass"
+        ],
+        [
+            "clocking",
+            "endclocking"
+        ],
+        [
+            "config",
+            "endconfig"
+        ],
+        [
+            "coverage",
+            "endcoverage"
+        ],
+        [
+            "covergroup",
+            "endgroup"
+        ],
+        [
+            "fork",
+            "join"
+        ],
+        [
+            "fork",
+            "join_any"
+        ],
+        [
+            "fork",
+            "join_none"
+        ],
+        [
+            "function",
+            "endfunction"
+        ],
+        [
+            "generate",
+            "endgenerate"
+        ],
+        [
+            "interface",
+            "endinterface"
+        ],
+        [
+            "macromodule",
+            "endmodule"
+        ],
+        [
+            "module",
+            "endmodule"
+        ],
+        [
+            "package",
+            "endpackage"
+        ],
+        [
+            "primitive",
+            "endprimitive"
+        ],
+        [
+            "program",
+            "endprogram"
+        ],
+        [
+            "property",
+            "endproperty"
+        ],
+        [
+            "specify",
+            "endspecify"
+        ],
+        [
+            "sequence",
+            "endsequence"
+        ],
+        [
+            "table",
+            "endtable"
+        ],
+        [
+            "task",
+            "endtask"
+        ]
     ],
     "autoClosingPairs": [
-        { "open": "(", "close": ")" },
-        { "open": "[", "close": "]" },
-        { "open": "{", "close": "}" },
-        { "open": "\"", "close": "\"", "notIn": ["string"] }
+        {
+            "open": "(",
+            "close": ")"
+        },
+        {
+            "open": "[",
+            "close": "]"
+        },
+        {
+            "open": "{",
+            "close": "}"
+        },
+        {
+            "open": "\"",
+            "close": "\"",
+            "notIn": [
+                "string"
+            ]
+        }
     ],
     "surroundingPairs": [
-        ["{", "}"],
-        ["[", "]"],
-        ["(", ")"],
-        ["'", "'"],
-        ["\"", "\""]
+        [
+            "{",
+            "}"
+        ],
+        [
+            "[",
+            "]"
+        ],
+        [
+            "(",
+            ")"
+        ],
+        [
+            "'",
+            "'"
+        ],
+        [
+            "\"",
+            "\""
+        ]
     ],
     "folding": {
         "markers": {
@@ -55,7 +178,9 @@
         }
     },
     "indentationRules": {
-        "increaseIndentPattern": "^((?!\\/\\/).)*(begin[^(end)\"'`]*|\\([^)\"'`]*|\\[[^\\]\"'`]*)$",
-        "decreaseIndentPattern": "^((?!.*?\\/\\*).*\\*/)?\\s*[\\)end\\]].*$"
+        "increaseIndentPattern": "^\\s*\\b(?:class|config|function|generate|interface|module|package|program|property|sequence|specify|table|task)\\b|^\\s*\\)\\s*;\\s*(?://.*)?$|\\bbegin\\b(?!.*\\bend\\b)|\\bcase[xz]?\\b(?!.*\\bendcase\\b)|^\\s*\\b(?:always|always_comb|always_ff|always_latch|initial|if|else|for|foreach|while)\\b(?!.*\\bbegin\\b)|[^\\n]*\\{\\s*$",
+        "decreaseIndentPattern": "^\\s*\\b(?:end|endcase|endclass|endconfig|endfunction|endgenerate|endinterface|endmodule|endpackage|endprogram|endproperty|endsequence|endspecify|endtable|endtask)\\b|^\\s*\\)(?:\\s*;)?\\s*(?://.*)?$|^\\s*\\(\\s*(?://.*)?$|[^\\n]*\\}\\s*$",
+        "indentNextLinePattern": "^\\s*\\(\\s*(?://.*)?$",
+        "unIndentedLinePattern": "^\\s*\\)\\s*(?://.*)?$"
     }
 }

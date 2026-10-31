@@ -13,7 +13,7 @@ async function initLanguageClient(context: vscode.ExtensionContext, output: vsco
     const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension.languageServer');
 
     // Source the ls and rules from SVN
-    const binary_path = context.asAbsolutePath("./bin/svn/verible-verilog-ls");
+    const binary_path = context.asAbsolutePath("./bin/svn/verible-verilog-ls.exe");
     const rules_config_arg_value = context.asAbsolutePath("./bin/svn/.rules.verible_lint");
 
     const rules_config_arg = ["--rules_config", rules_config_arg_value];

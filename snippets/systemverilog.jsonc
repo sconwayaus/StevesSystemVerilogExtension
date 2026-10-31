@@ -58,12 +58,12 @@
         "prefix": "always_ff_all_reset",
         "description": "Snippet for an always_ff block",
         "body": [
-            "always_ff @(posedge ${1:clk}, ${3:negedge} ${2:n_areset}) begin",
-            "\tif(!${2:n_areset}) begin",
+            "always_ff @(posedge ${1:clk}, ${2:negedge} ${3:n_areset}) begin",
+            "\tif(!${3:n_areset}) begin",
             "\t\t$0",
             "\tend",
             "\telse begin",
-            "\t\tif(!${3:n_sreset}) begin",
+            "\t\tif(!${4:n_sreset}) begin",
             "\t\t\t",
             "\t\tend",
             "\t\telse begin",
@@ -514,20 +514,21 @@
         ],
         "description": "Randomize local array elements using unique and distribution constraints"
     },
-    "input_module": {
-        "prefix": "input_module",
-        "body": [
-            "input wire ${1:[1:0]}\t\t$0${2:port_name}_in,"
-        ],
-        "description": "Input port for a module"
-    },
-    "output_module": {
-        "prefix": "output_module",
-        "body": [
-            "output logic ${1:[1:0]}\t\t$0${2:port_name}_out,"
-        ],
-        "description": "Output port for a module"
-    },
+    // FIXME: the mid intentation tabs did not translate correctly to spaces
+    // "input_module": {
+    //     "prefix": "input_module",
+    //     "body": [
+    //         "input wire ${1:[1:0]}\t\t$0${2:port_name}_in,"
+    //     ],
+    //     "description": "Input port for a module"
+    // },
+    // "output_module": {
+    //     "prefix": "output_module",
+    //     "body": [
+    //         "output logic ${1:[1:0]}\t\t$0${2:port_name}_out,"
+    //     ],
+    //     "description": "Output port for a module"
+    // },
     "default_nettype_none": {
         "prefix": "default_nettype_none",
         "body": [
