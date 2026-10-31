@@ -13,7 +13,7 @@ async function initLanguageClient(context: vscode.ExtensionContext, output: vsco
     const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension.languageServer');
 
     // Source the ls and rules from SVN
-    var binary_path = context.asAbsolutePath("./bin/svn/verible-verilog-ls");
+    const binary_path = context.asAbsolutePath("./bin/svn/verible-verilog-ls");
     const rules_config_arg_value = context.asAbsolutePath("./bin/svn/.rules.verible_lint");
 
     const rules_config_arg = ["--rules_config", rules_config_arg_value];
@@ -93,16 +93,17 @@ export function deactivate(): Thenable<void> | undefined {
 
 export async function updateExtension(context: vscode.ExtensionContext, root_path:string, output: vscode.LogOutputChannel) {
     output.appendLine("Check for new extension");
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const semverGt = require('semver/functions/gt');
 
     // Get the current version
-    var current_version = context.extension.packageJSON["version"];
+    const current_version = context.extension.packageJSON["version"];
 
     // See if there is a newer vsix file of the format
     // "steves-system-verilog-extension-0.2.1.vsix"
     output.appendLine("Searching for vsix files here: '" + root_path + "'");
 
-    var filelist = fs.readdirSync(root_path).filter(fn => {
+    const filelist = fs.readdirSync(root_path).filter(fn => {
         return fn.startsWith("steves-system-verilog-extension-") && fn.endsWith(".vsix");
     });
 
@@ -112,10 +113,10 @@ export async function updateExtension(context: vscode.ExtensionContext, root_pat
     }
 
     // Search for the latest version
-    var latest_version = current_version;
-    var latest_version_filename: string = "";
+    let latest_version = current_version;
+    let latest_version_filename: string = "";
     filelist.forEach(f => {
-        var file_version = f.replace("steves-system-verilog-extension-", "");
+        let file_version = f.replace("steves-system-verilog-extension-", "");
         file_version = file_version.replace(".vsix", "");
         output.appendLine("Version Found: '" + file_version + "'");
         if (semverGt(file_version, latest_version)) {
@@ -132,7 +133,7 @@ export async function updateExtension(context: vscode.ExtensionContext, root_pat
                 "Do you want to update?\n", "Yes", "No")
             .then(answer => {
                 if (answer === "Yes") {
-                    var update_file = root_path + latest_version_filename;
+                    const update_file = root_path + latest_version_filename;
                     output.appendLine("Updating Extension: " + update_file);
                     vscode.commands.executeCommand('workbench.extensions.command.installFromVSIX', [vscode.Uri.file(update_file)]);
                 }

@@ -21,7 +21,7 @@ async function svnUpdateVSIX(context: vscode.ExtensionContext, output: vscode.Lo
 
 async function isSVNPathOK(svn_path: string, output: vscode.LogOutputChannel) {
     // Perform an svn ls and check for the presence of .rules.verible_lint and verible-verilog-ls.exe
-    var cmd_svn_ls = "svn ls " + svn_path
+    const cmd_svn_ls = "svn ls " + svn_path
     try {
         const text = await execShell(cmd_svn_ls, output);
         output.appendLine("svn ls: " + text);
@@ -42,8 +42,12 @@ async function isSVNPathOK(svn_path: string, output: vscode.LogOutputChannel) {
             return true;
         }
 
-    } catch (error: any) {
-        output.appendLine(error.message);
+    } catch (error: unknown) { // Explicit :unknown is optional but recommended
+        if (error instanceof Error) {
+            output.appendLine(error.message);
+        } else {
+            output.appendLine("An unexpected, non-Error value was thrown: " + error);
+        }
     }
 
     output.appendLine("SVN Path NOT OK ('" + svn_path + "')");
@@ -51,7 +55,7 @@ async function isSVNPathOK(svn_path: string, output: vscode.LogOutputChannel) {
 }
 
 async function isSVNCheckoutOK(svn_path: string, target_path: string, output: vscode.LogOutputChannel) {
-    var cmd_checkout = "svn checkout --force " + svn_path + " " + target_path;
+    const cmd_checkout = "svn checkout --force " + svn_path + " " + target_path;
     try {
         const text = await execShell(cmd_checkout, output);
         output.appendLine("svn checkout: " + text);
@@ -78,7 +82,7 @@ export async function svnCheckout(context: vscode.ExtensionContext, output: vsco
     const path_exists = fs.existsSync(quoted_path);
 
     // Revert any local changes (if any)
-    var cmd_revert = "svn revert -R " + quoted_path;
+    const cmd_revert = "svn revert -R " + quoted_path;
     try {
         const revert_text = await execShell(cmd_revert, output);
         output.appendLine("svn revert: " + revert_text);

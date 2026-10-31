@@ -31,7 +31,11 @@ const extensionConfig = {
     rules: [
       {
         test: /\.tsx?$/,
-        exclude: ["/node_modules/", "/bin/"],
+        exclude: [
+          "/node_modules/", 
+          "/bin/",
+          path.resolve('webpack.config.js')
+        ],
         loader: 'esbuild-loader',
         options: {
           loader: 'ts', // Or 'tsx' if you use React JSX

@@ -24,8 +24,12 @@ export async function runUpdateScript(context: vscode.ExtensionContext, output: 
         if(json_extensions != undefined) {
             processExtensions(json_extensions, output);
         }
-    } catch (error: any) {
-        output.append(error);
+    } catch (error: unknown) { // Explicit :unknown is optional but recommended
+        if (error instanceof Error) {
+            output.appendLine(error.message);
+        } else {
+            output.appendLine("An unexpected, non-Error value was thrown: " + error);
+        }
     }
 }
 
@@ -62,6 +66,7 @@ export async function runUpdateScript(context: vscode.ExtensionContext, output: 
  * @param json_settings 
  * @param output 
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function processSettings(json_settings: any, output: vscode.LogOutputChannel) {
     const settings_keys = Object.keys(json_settings);
 
@@ -77,14 +82,15 @@ function processSettings(json_settings: any, output: vscode.LogOutputChannel) {
             const user_settings:boolean = setting["user_setting"]
             
             switch (type) {
-                case "string":
+                case "string": {
                     const value = setting["value"];
                     output.appendLine("Set: " + config_str + " = " + value + " user_setting:" + user_settings);
                     config.update(config_str, value, user_settings);
                     break;
+                }
 
-                case "array":
-                    var array = <string[]>(config.get(key));
+                case "array": {
+                    const array = <string[]>(config.get(key));
 
                     const addList = <[]>setting["add"];
                     if(addList != undefined) {
@@ -108,9 +114,11 @@ function processSettings(json_settings: any, output: vscode.LogOutputChannel) {
                     output.appendLine("Set: " + config_str + " = " + array + " user_setting:" + user_settings);
                     config.update(config_str, array, user_settings);
                     break;
+                }
 
-                default:
+                default: {
                     break;
+                }
             }
         });
     });
@@ -140,10 +148,10 @@ function processSettings(json_settings: any, output: vscode.LogOutputChannel) {
  * @param json_extensions 
  * @param output 
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function processExtensions(json_extensions: any, output: vscode.LogOutputChannel) {
     const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension');
     const ignored_extensions = <string[]>config.get("update.ignoredExtensions");
-    const semverGt = require('semver/functions/gt');
     
     const id_list = Object.keys(json_extensions);
     id_list.forEach(id => {
@@ -169,7 +177,7 @@ async function processExtensions(json_extensions: any, output: vscode.LogOutputC
  */
 function addIgnoredExtension(filename:string) {
     const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension');
-    var ignored_extensions = <string[]>config.get("update.ignoredExtensions");
+    const ignored_extensions = <string[]>config.get("update.ignoredExtensions");
     ignored_extensions.push(filename);
     config.update("update.ignoredExtensions", ignored_extensions, true);
 }
@@ -182,14 +190,16 @@ function addIgnoredExtension(filename:string) {
  * @param filename 
  * @param output 
  */
-async function updateExtension(extension: vscode.Extension<any>, root_path:string, filename:string, output: vscode.LogOutputChannel) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function updateExtension(extension: vscode.Extension<any>, root_path:string, filename:string, output:vscode.LogOutputChannel) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const semverGt = require('semver/functions/gt');
-    var update_file = root_path + filename;
+    const update_file = root_path + filename;
 
     // Get the current version
-    var current_version = extension.packageJSON["version"];
+    const current_version = extension.packageJSON["version"];
 
-    var file_version: string = filename.replace(".vsix", "");
+    let file_version: string = filename.replace(".vsix", "");
     file_version = file_version.slice(file_version.lastIndexOf("-") + 1);
     if (semverGt(file_version, current_version)) {
         vscode.window
@@ -212,13 +222,13 @@ async function updateExtension(extension: vscode.Extension<any>, root_path:strin
  * @param filename 
  * @param output 
  */
-async function installExtension(root_path:string, filename:string, output: vscode.LogOutputChannel) {
+async function installExtension(root_path:string, filename:string, output:vscode.LogOutputChannel) {
     vscode.window
         .showInformationMessage("Recommended Extension '" + filename + "'?\n" + 
             "Do you want to install?\n", "Yes", "No")
         .then(answer => {
             if (answer === "Yes") {
-                var update_file = root_path + filename;
+                const update_file = root_path + filename;
                 output.appendLine("Installing Extension: " + update_file);
                 vscode.commands.executeCommand('workbench.extensions.command.installFromVSIX', [vscode.Uri.file(update_file)]);
             } else {
