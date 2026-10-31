@@ -3,6 +3,7 @@ node_modules
 package-lock.json
 README.html
 dist/
+out/
 bin/
 /package-lock.json
 client/package-lock.json

@@ -8,7 +8,7 @@ import * as fs from 'fs';
  * @param context 
  * @param output 
  */
-export async function runUpdateScript(context: vscode.ExtensionContext, output: vscode.OutputChannel) {
+export async function runUpdateScript(context: vscode.ExtensionContext, output: vscode.LogOutputChannel) {
     const update_filepath = context.asAbsolutePath("./bin/svn/update.json");
     output.appendLine("Read update file: " + update_filepath);
     try {
@@ -62,7 +62,7 @@ export async function runUpdateScript(context: vscode.ExtensionContext, output: 
  * @param json_settings 
  * @param output 
  */
-function processSettings(json_settings: any, output: vscode.OutputChannel) {
+function processSettings(json_settings: any, output: vscode.LogOutputChannel) {
     const settings_keys = Object.keys(json_settings);
 
     settings_keys.forEach(config_key => {
@@ -140,7 +140,7 @@ function processSettings(json_settings: any, output: vscode.OutputChannel) {
  * @param json_extensions 
  * @param output 
  */
-async function processExtensions(json_extensions: any, output: vscode.OutputChannel) {
+async function processExtensions(json_extensions: any, output: vscode.LogOutputChannel) {
     const config = vscode.workspace.getConfiguration('stevesSystemVerilogExtension');
     const ignored_extensions = <string[]>config.get("update.ignoredExtensions");
     const semverGt = require('semver/functions/gt');
@@ -182,7 +182,7 @@ function addIgnoredExtension(filename:string) {
  * @param filename 
  * @param output 
  */
-async function updateExtension(extension: vscode.Extension<any>, root_path:string, filename:string, output: vscode.OutputChannel) {
+async function updateExtension(extension: vscode.Extension<any>, root_path:string, filename:string, output: vscode.LogOutputChannel) {
     const semverGt = require('semver/functions/gt');
     var update_file = root_path + filename;
 
@@ -212,7 +212,7 @@ async function updateExtension(extension: vscode.Extension<any>, root_path:strin
  * @param filename 
  * @param output 
  */
-async function installExtension(root_path:string, filename:string, output: vscode.OutputChannel) {
+async function installExtension(root_path:string, filename:string, output: vscode.LogOutputChannel) {
     vscode.window
         .showInformationMessage("Recommended Extension '" + filename + "'?\n" + 
             "Do you want to install?\n", "Yes", "No")

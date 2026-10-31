@@ -43,7 +43,7 @@ async function renameProjectFileListListener() {
     await createProjectFileList();
 }
 
-export async function initProjectFileList(context: vscode.ExtensionContext, out: vscode.OutputChannel) {
+export async function initProjectFileList(context: vscode.ExtensionContext, out: vscode.LogOutputChannel) {
     output = out;
 
     // Test to see if verible.filelist exists. If not create one
